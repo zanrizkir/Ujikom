@@ -48,8 +48,8 @@
               <div class="row">
                   <div class="col mb-3">
                       <label class="form-label">Note</label>
-                      <textarea name="note" cols="30" rows="3" class="form-control mb-2  @error('note') is-invalid @enderror"
-                          placeholder="note" value="{{ old('note') }}"></textarea>
+                      <input id="note" type="hidden" name="note" class="@error('note') is-invalid @enderror" >
+                      <trix-editor input="note"></trix-editor>
                       @error('note')
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>

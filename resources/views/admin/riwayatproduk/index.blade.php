@@ -36,7 +36,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="d-flex">
-                                                        {{ $riwayatProduk->produk->nama_produk }}
+                                                        {{ $riwayatProduk->produk->name }}
                                                     </div>
                                                 </td>
                                                 <td>
@@ -57,7 +57,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="d-flex">
-                                                        {{ $riwayatProduk->note }}
+                                                        {!! $riwayatProduk->note !!}
                                                     </div>
                                                 </td>
                                                 <td>

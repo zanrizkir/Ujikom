@@ -19,12 +19,12 @@ return new class extends Migration
             $table->unsignedBigInteger('kategori_id');
             $table->foreign('kategori_id')->references('id')->on('kategoris')->onDelete('cascade');
             $table->string('name');
-            $table->string('slug');
             $table->string('hpp');
             $table->string('harga');
             $table->integer('stok');
             $table->integer('diskon')->default('0');
             $table->text('deskripsi');
+            $table->string('slug');
             $table->timestamps();
         });
     }

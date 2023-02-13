@@ -114,19 +114,6 @@
               @enderror
             </div>
             
-            {{-- <div class="form-group mb-3">
-              <label for="example-palaceholder">Deskripsi</label>
-              <textarea name="deskripsi" id="editor" cols="20" rows="5"
-                  class="form-control  @error('deskripsi') is-invalid @enderror"
-                  value="{{ old('deskripsi') }}"></textarea>
-              @error('deskripsi')
-                  <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-              @enderror
-            </div> --}}
-
-
             <div class="mb-3">
               <label class="form-label">gambar produk</label>
               

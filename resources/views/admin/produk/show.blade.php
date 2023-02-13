@@ -64,7 +64,12 @@
                             <button class="btn btn-secondary mb-2" type="button" disabled>%</button>
                             </div>
                         </div>
-                        {!! $produk->deskripsi !!}
+                        <div class="card mb-3">
+                            <div class="card-body">
+
+                                {!! $produk->deskripsi !!}
+                            </div>
+                        </div>
                         {{-- <div class="form-group mb-3">
                             <label for="example-palaceholder">Deskripsi</label>
                             <textarea name="deskripsi" cols="20" rows="5"
