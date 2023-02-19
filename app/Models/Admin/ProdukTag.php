@@ -10,5 +10,6 @@ class ProdukTag extends Model
     use HasFactory;
 
     protected $fillable = ['produk_id', 'tag_id'];
+    
 
 }

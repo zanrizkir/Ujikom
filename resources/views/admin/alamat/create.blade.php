@@ -58,14 +58,14 @@
                 <div class="row">
                     <div class="col mb-3">
                         <label class="form-label">Name Provinsi</label>
-                        <select name="provinsi_id" id="provinsi"
-                            class="form-control @error('provinsi_id') is-invalid @enderror">
-                        @foreach ($provinsi as $prov)
+                        <select name="province_id" id="province_destination"
+                            class="form-control @error('province_destination') is-invalid @enderror">
+                        @foreach ($provinces as $province => $value)
                             <option value="" hidden>Pilih Provinsi</option>
-                            <option value="{{ $prov->id }}">{{ $prov->provinsi }}</option>
+                            <option value="{{ $province }}">{{ $value }}</option>
                         @endforeach
                         </select>
-                        @error('provinsi_id')
+                        @error('province_destination')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -75,25 +75,11 @@
                 <div class="row">
                     <div class="col mb-3">
                         <label class="form-label">Nama Kota/Kabupaten</label>
-                        <select name="kota_id" id="kota"
-                            class="form-control @error('kota_id') is-invalid @enderror">
-                            <option value="" hidden>Pilih Provinsi Terlebih dulu</option>
+                        <select class="form-control  @error('city_destination') is-invalid @enderror" name="city_id"
+                        id="city_destination">
+                            <option selected disabled>Kota</option>
                         </select>
-                        @error('kota_id')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                                </span>
-                        @enderror
-                    </div>           
-                </div>
-                <div class="row">
-                    <div class="col mb-3">
-                        <label class="form-label">Kecamatan</label>
-                        <select name="kecamatan_id" id="kecamatan"
-                            class="form-control @error('kecamatan_id') is-invalid @enderror">
-                            <option value="" hidden>Pilih Kota Terlebih dulu</option>
-                        </select>
-                        @error('kecamatan_id')
+                        @error('city_destination')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                                 </span>
@@ -103,25 +89,25 @@
                 <div class="row">
                     <div class="col mb-3">
                         <label class="form-label">Alamat</label>
-                        <textarea name="alamat" cols="30" rows="3" class="form-control mb-2  @error('alamat') is-invalid @enderror"
-                            placeholder="alamat" value="{{ old('alamat') }}"></textarea>
-                        @error('alamat')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                        <textarea name="alamat" cols="20" rows="3" class="form-control  @error('alamat') is-invalid @enderror"
+                                placeholder="alamat" value="{{ old('alamat') }}"></textarea>
+                            @error('alamat')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                     </div>
                 </div>
                 <div class="row">
                     <div class="col mb-3">
-                        <label class="form-label">Tag Alamat</label>
-                        <select name="tag"
-                            class="form-control @error('tag') is-invalid @enderror">
-                            <option value="" hidden>Pilih Tag Alamat</option>
+                        <label class="form-label">Label Alamat</label>
+                        <select name="label"
+                            class="form-control @error('label') is-invalid @enderror">
+                            <option value="" hidden>Pilih Label Alamat</option>
                             <option value="rumah">rumah</option>
                             <option value="kantor">kantor</option>
                         </select>
-                        @error('tag')
+                        @error('label')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -139,69 +125,47 @@
     </div>
 </div>
 <!-- table -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+  <script>
+   $(document).ready(function() {
+      $('.select2').select2({
+      closeOnSelect: false
+      });
+  });
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
-        $('#provinsi').on('change', function() {
-            var provinsi_id = $(this).val();
-            if (provinsi_id) {
+        $('select[name="province_id"]').on('change', function() {
+            var provinceId = $(this).val();
+            if (provinceId) {
                 $.ajax({
-                    url: '/admin/getKota/' + provinsi_id,
+                    url: '/admin/getcity/' + provinceId,
                     type: "GET",
                     data: {
                         "_token": "{{ csrf_token() }}"
                     },
                     dataType: "json",
+                    type: 'GET',
+                    dataType: 'json',
                     success: function(data) {
-                        if (data) {
-                            $('#kota').empty();
-                            $('#kota').append(
-                                '<option hidden>Pilih Kota</option>');
-                            $.each(data, function(key, kecamatans) {
-                                $('select[name="kota_id"]').append(
-                                    '<option value="' + kecamatans.id + '">' +
-                                    kecamatans.kota + '</option>');
-                            });
-                        } else {
-                            $('#kota').empty();
-                        }
+                        $('select[name="city_id"]').empty();
+                        // console.log(data);
+                        $.each(data, function(key, value) {
+                            $('select[name="city_id"]').append(
+                                '<option value="' + key + '"> ' + value +
+                                '</option>');
+                        });
                     }
                 });
             } else {
-                $('#kota').empty();
-            }
-        });
-    });
-</script>
-<script>
-    $(document).ready(function() {
-        $('#kota').on('change', function() {
-            var kota_id = $(this).val();
-            if (kota_id) {
-                $.ajax({
-                    url: '/admin/getKecamatan/' + kota_id,
-                    type: "GET",
-                    data: {
-                        "_token": "{{ csrf_token() }}"
-                    },
-                    dataType: "json",
-                    success: function(data) {
-                        if (data) {
-                            $('#kecamatan').empty();
-                            $('#kecamatan').append(
-                                '<option hidden>Pilih Kecamatan</option>');
-                            $.each(data, function(key, kecamatans) {
-                                $('select[name="kecamatan_id"]').append(
-                                    '<option value="' + kecamatans.id + '">' +
-                                    kecamatans.kecamatan + '</option>');
-                            });
-                        } else {
-                            $('#kecamatan').empty();
-                        }
-                    }
-                });
-            } else {
-                $('#kecamatan').empty();
+                $('select[name="city_id"]').empty();
             }
         });
     });

@@ -17,4 +17,8 @@ class Tag extends Model
     {
         return $this->belongsToMany(Produk::class)->as('produks');
     }
+
+    public  function getRouteKeyName(){
+        return 'slug';
+    }
 }

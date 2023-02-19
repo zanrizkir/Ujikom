@@ -70,8 +70,7 @@ class RiwayatProdukController extends Controller
         }
 
         $produks->save();
-        return redirect()
-            ->route('produk.index')->with('toast_success', 'Data Berhasil Ditambahkan');
+        return redirect()->route('produk.index')->with('toast_success', 'Data Berhasil Ditambahkan');
     }
 
     /**

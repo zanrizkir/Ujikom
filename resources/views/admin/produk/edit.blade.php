@@ -104,7 +104,7 @@
                         <div class="form-group mb-3">
                             <label for="example-palaceholder">Deskripsi</label>
                             <input id="deskripsi" type="hidden" name="deskripsi" class="@error('deskripsi') is-invalid @enderror" >
-                            <trix-editor input="deskripsi"></trix-editor>
+                            <trix-editor input="deskripsi">{!! $produk->deskripsi !!}</trix-editor>
                             @error('deskripsi')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

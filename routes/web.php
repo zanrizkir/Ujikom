@@ -7,11 +7,12 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\KotaController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\User\FrontController;
+use App\Http\Controllers\FrontController;
 use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\TopUpController;
 use App\Http\Controllers\Admin\AlamatController;
 use App\Http\Controllers\Admin\ProdukController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\ProvinsiController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -32,17 +33,15 @@ use App\Http\Controllers\Admin\MetodePembayaranController;
 |
 */
 
-Route::get('/', function () {
-    return view('template');
-});
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/home   ', [App\Http\Controllers\HomeController::class, 'index']);
     Route::resource('/dashboard',DashboardController::class);
     Route::resource('/kategori', KategoriController::class);
     Route::resource('/tag', TagController::class);
     Route::resource('/subkategori', SubKategoriController::class);
     Route::resource('/produk', ProdukController::class);
-    Route::get('/produk/checkSlug', [ProdukController::class, 'checkSlug']);
+    // Route::get('/produk/checkSlug', [ProdukController::class, 'checkSlug']);
     Route::resource('/image', ImageController::class);
     Route::resource('/riwayatProduk', RiwayatProdukController::class);
     Route::resource('/user', UserController::class);
@@ -55,19 +54,21 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('/kecamatan', KecamatanController::class);
     Route::get('getKota/{id}', [KotaController::class, 'getKota']);
     Route::resource('/alamat', AlamatController::class);
-    Route::get('getKecamatan/{id}', [KecamatanController::class, 'getKecamatan']);
+    Route::get('getcity/{id}', [AlamatController::class, 'getCities']);
 });
+
+Route::middleware('auth')->group (function () {
+    Route::resource('/keranjang', App\Http\Controllers\KeranjangController::class);
+    Route::resource('/checkout', App\Http\Controllers\CheckoutController::class);
+    Route::get('/profile', [App\Http\Controllers\FrontController::class, 'profileuser']);
+    Route::get('/detailproduk/{produk}', [FrontController::class, 'produkdetail']);
+});
+Route::get('/', [App\Http\Controllers\FrontController::class, 'user']);
+Route::get('/produk', [FrontController::class, 'produkuser']);
+// Route::get('/produk', [FrontController::class, 'tag']);
+Route::get('/tag', [\App\Http\Controllers\ShopController::class, 'tag'])->name('shop.tag');
 
 Auth::routes();
-Route::group(['prefix' => '/'], function () {
-    Route::get('/produk', [FrontController::class, 'produkuser']);
-    Route::get('/detailproduk/{id}', [FrontController::class, 'produkdetail']);
-    Route::resource('/keranjang', KeranjangController::class);
-});
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/user', [App\Http\Controllers\HomeController::class, 'user'])->name('user');
-
-
 
 
 

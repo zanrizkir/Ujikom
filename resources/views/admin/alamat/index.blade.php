@@ -20,19 +20,19 @@
                 <thead class="thead-dark">
                   <tr>
                     <th>No</th>
-                    <th>User</th>
+                    <th>Nama Pengguna</th>
                     <th>Nama Lengkap</th>
-                    <th>No Telpon</th>
+                    <th>Telpon</th>
                     <th>Provinsi</th>
                     <th>Kota</th>
-                    <th>Kecamatan</th>
-                    <th>Tag</th>
-                    <th>Action</th>
+                    <th>Alamat Lengkap</th>
+                    <th>Label</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @if (count($alamat))
-                    @foreach ($alamat as $alm)
+                  @if (count($alamats))
+                    @foreach ($alamats as $alamat)
                         <tr>
                             <td>
                                 <div class="d-flex">
@@ -41,57 +41,57 @@
                             </td>
                             <td>
                                 <div class="d-flex">
-                                    {{ $alm->user->name }}
+                                  {{ $alamat->user->name }}
                                 </div>
                             </td>
                             <td>
                                 <div class="d-flex">
-                                    {{ $alm->nama_lengkap }}
+                                  {{ $alamat->nama_lengkap }}
                                 </div>
                             </td>
                             <td>
                                 <div class="d-flex">
-                                    {{ $alm->telpon }}
+                                  {{ $alamat->telpon }}
                                 </div>
                             </td>
                             <td>
                                 <div class="d-flex">        
-                                    {{ $alm->provinsi->provinsi }}
+                                  {{ $alamat->province->title }}
                                 </div>
                             </td>
                             <td>
                                 <div class="d-flex">
-                                  {{ $alm->kota->kota }}
+                                  {{ $alamat->city->title }}
                                 </div>
                             </td>
                             <td>
                                 <div class="d-flex">
-                                  {{ $alm->kecamatan->kecamatan }}
+                                  {{ $alamat->alamat }}
                                 </div>
                             </td>
                             <td>
                                 <div class="d-flex">
-                                    {{ $alm->tag }}
+                                    {{ $alamat->label }}
                                 </div>
                             </td>
                             <td>
-                                <form action="{{ route('produk.destroy', $alm->id) }}" method="post">
+                                <form action="{{ route('produk.destroy', $alamat->id) }}" method="post">
                                     @csrf
                                     @method('delete')
-                                    <a href="{{ route('produk.show', $alm->id) }}"
+                                    <a href="{{ route('produk.show', $alamat->id) }}"
                                         class="btn btn-sm btn-warning" data-bs-toggle="tooltip"
                                         data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
                                         title="Show Data">
                                         S
                                     </a> |
-                                    <a href="{{ route('produk.edit', $alm->id) }}"
+                                    <a href="{{ route('produk.edit', $alamat->id) }}"
                                         class="btn btn-sm btn-secondary" data-bs-toggle="tooltip"
                                         data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
                                         title="Edit Data">
                                         edit
                                     </a> |
-                                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#defaultModal{{ $alm->id }}"> Hapus </button>
-                                    <div class="modal fade" id="defaultModal{{ $alm->id }}" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+                                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#defaultModal{{ $alamat->id }}"> Hapus </button>
+                                    <div class="modal fade" id="defaultModal{{ $alamat->id }}" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
                                       <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                           <div class="modal-header">

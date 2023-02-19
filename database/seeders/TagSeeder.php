@@ -18,39 +18,22 @@ class TagSeeder extends Seeder
         $tags = [
             [
                 'name' => 'Gaming',
+                'slug' => 'gaming',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => 'Editing',
+                'slug' => 'editing',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => 'RGB',
+                'slug' => 'rgb',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
-            [
-                'name' => 'wireless',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Css',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Php',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Python',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+            ]
         ];
         Tag::insert($tags);
     }

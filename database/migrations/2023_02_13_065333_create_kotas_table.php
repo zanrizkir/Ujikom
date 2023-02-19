@@ -15,6 +15,8 @@ class CreateKotasTable extends Migration
     {
         Schema::create('kotas', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('provinsi_id');
+            $table->foreign('provinsi_id')->references('id')->on('provinsis')->onDelete('cascade');
             $table->timestamps();
         });
     }

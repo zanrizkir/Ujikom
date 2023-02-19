@@ -38,33 +38,65 @@
                                 </div>
                             </td>
                             <td>
-                                <form action="{{ route('kategori.destroy', $kategoris->id) }}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <a href="{{ route('kategori.edit', $kategoris->id) }}"
-                                        class="btn btn-sm btn-secondary" data-bs-toggle="tooltip"
-                                        data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
-                                        title="Edit Data">
-                                        edit
-                                    </a> |
-                                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#defaultModal{{ $kategoris->id }}"> Hapus </button>
-                                    <div class="modal fade" id="defaultModal{{ $kategoris->id }}" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel " aria-hidden="true">
-                                      <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                          <div class="modal-header">
-                                            <h5 class="modal-title " id="defaultModalLabel">Apakah Anda Yakin</h5>
+                              <button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#defaultModal{{ $kategoris->id }}"> edit </button>
+                              <div class="modal fade" id="defaultModal{{ $kategoris->id }}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editModalLabel">Kategori</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                               <span aria-hidden="true">&times;</span>
                                             </button>
                                           </div>
-                                          <div class="modal-footer">
-                                            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn mb-2 btn-primary">Hapus</button>
-                                          </div>
+                                        <div class="modal-body">
+                                            <form action="{{ route('kategori.update', $kategoris->id) }}" method="post">
+                                                @csrf
+                                                @method('put')
+                                                <div class="col mb-3">
+                                                    <label class="form-label">Nama
+                                                        Kategori</label>
+                                                    <input type="text" name="name"
+                                                        class="form-control mb-2  @error('name') is-invalid @enderror" placeholder="Nama Kategori"
+                                                        value="{{ $kategoris->name }}">
+                                                    @error('name')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>                        
+
+                              <form action="{{ route('kategori.destroy', $kategoris->id) }}" method="post">
+                                  @csrf
+                                  @method('delete')
+                                  <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#defaultModal{{ $kategoris->id }}"> Hapus </button>
+                                  <div class="modal fade" id="defaultModal{{ $kategoris->id }}" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel " aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title " id="defaultModalLabel">Apakah Anda Yakin</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
+                                          <button type="submit" class="btn mb-2 btn-primary">Hapus</button>
                                         </div>
                                       </div>
                                     </div>
-                                </form>
+                                  </div>
+                              </form>
                             </td>
                         </tr>
                     @endforeach
@@ -81,6 +113,7 @@
 </div>
 
 @include('admin.kategori.create')
+{{-- @include('admin.kategori.edit') --}}
 
 
     

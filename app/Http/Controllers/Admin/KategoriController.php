@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Str;
 use App\Models\Admin\Kategori;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -20,7 +21,7 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        $kategori = Kategori::all();
+        $kategori = Kategori::latest()->get();
         $active = 'kategori';
         return view('admin.kategori.index', compact('kategori','active'));
     }
@@ -53,6 +54,9 @@ class KategoriController extends Controller
 
         $kategori = new Kategori();
         $kategori->name = $request->name;
+        $kategori->slug = Str::slug($request->nama_produk, '-');
+
+        
         $kategori->save();
         return redirect()->route('kategori.index')->with('toast_success', 'Data Berhasil Ditambahkan');
         
@@ -100,6 +104,8 @@ class KategoriController extends Controller
         $validasiData = $request->validate($rules);
 
         $kategori->name = $request->name;
+        $kategori->slug = Str::slug($request->nama_produk, '-');
+
         $kategori->save();
         return redirect()
             ->route('kategori.index')->with('toast_success', 'Data Berhasil Diubah');

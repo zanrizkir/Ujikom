@@ -23,11 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $active = 'home';
-        return view('home', compact('active'));
+        return view('home');
     }
-    public function user()
-     {
-         return view('user');
-     }
 }

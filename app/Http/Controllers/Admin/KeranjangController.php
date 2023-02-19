@@ -14,7 +14,6 @@ class KeranjangController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**

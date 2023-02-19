@@ -77,34 +77,34 @@
         </a>
       </li>
     </ul>
-    <ul class="navbar-nav flex-fill w-100 mb-2">
+    {{-- <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item w-100 {{ $active == 'metode' ? 'active' : null }}">
         <a class="nav-link " href="/admin/metode">
           <i class="fe fe-database "></i>
           <span class="ml-3 item-text">Metode Pembayaran</span>
         </a>
       </li>
-    </ul>
+    </ul> --}}
 
     <p class="text-muted nav-heading mt-4 mb-1">
       <span>Data User</span>
     </p>
       
     <ul class="navbar-nav flex-fill w-100 mb-2">
-      <li class="nav-item w-100 {{ $active == 'topup' ? 'active' : null }}">
-        <a class="nav-link " href="/admin/topup">
+      <li class="nav-item w-100 {{ $active == 'alamat' ? 'active' : null }}">
+        <a class="nav-link " href="/admin/alamat">
           <i class="fe fe-credit-card "></i>
-          <span class="ml-3 item-text">Topup</span>
+          <span class="ml-3 item-text">Alamat</span>
         </a>
       </li>
     </ul>
     
-    <ul class="navbar-nav flex-fill w-100 mb-2">
+    {{-- <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item w-100 {{ $active == 'keranjang' ? 'active' : null }}">
         <a class="nav-link " href="/admin/keranjang">
           <i class="fe fe-shopping-cart "></i>
           <span class="ml-3 item-text">Keranjang</span>
         </a>
       </li>
-    </ul>
+    </ul> --}}
   </nav>

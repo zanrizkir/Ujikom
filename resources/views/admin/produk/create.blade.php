@@ -58,7 +58,7 @@
                   </span>
               @enderror
             </div>
-            <div class="form-group mb-3">
+            {{-- <div class="form-group mb-3">
               <label for="example-password">Slug</label>
               <input type="text" id="slug" name="slug"
               class="form-control"  @error('slug') is-invalid @enderror value="{{ old('slug') }}" disabled readonly>
@@ -67,7 +67,7 @@
                       <strong>{{ $message }}</strong>
                   </span>
               @enderror
-            </div>
+            </div> --}}
             <div class="form-group mb-3">
               <label for="example-palaceholder">Hpp Produk</label>
               <input type="number" min="1"  name="hpp" class="form-control" @error('hpp') is-invalid @enderror
@@ -105,7 +105,7 @@
             </div>
             <div class="form-group mb-3">
               <label for="example-palaceholder">Deskripsi</label>
-              <input id="deskripsi" type="hidden" name="deskripsi" class="@error('deskripsi') is-invalid @enderror" >
+              <input id="deskripsi" type="hidden" name="deskripsi" class="@error('deskripsi') is-invalid @enderror" value="{{ old('deskripsi') }}">
               <trix-editor input="deskripsi"></trix-editor>
               @error('deskripsi')
                   <span class="invalid-feedback" role="alert">
@@ -119,7 +119,7 @@
               
               <div class="custom-file">
                 <input type="file" class="form-control-file @error('gambar_produk') is-invalid @enderror"
-                    name="gambar_produk[]" value="{{ old('gambar_produk') }}" multiple>
+                    name="gambar_produk[]" value="{{ old('gambar_produk[]') }}" multiple>
                 @error('gambar_produk')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

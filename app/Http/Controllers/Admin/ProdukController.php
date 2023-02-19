@@ -78,10 +78,10 @@ class ProdukController extends Controller
         $produk->stok = $request->stok;
         $produk->diskon = $request->diskon;
         $produk->deskripsi = $request->deskripsi;
-        $produk->slug = Str::slug($request->nama_produk, '-');
+        $produk->slug = Str::slug($request->name, '-');
         $produk->save();
 
-        // dd($request->tags);
+        // dd($produk->slug);
         // foreach ($produk as $pro){
         //     ProdukTag::create([
         //         'produk_id' => $produk->id,
@@ -166,7 +166,7 @@ class ProdukController extends Controller
         $produk->kategori_id = $produk->kategori_id;
         // $produk->tags = $request->tags;
         $produk->name = $request->name;
-        $produk->slug = Str::slug($request->nama_produk, '-');
+        $produk->slug = Str::slug($request->name, '-');
         $produk->hpp = $request->hpp;
         $produk->harga = $request->harga;
         $produk->stok = $request->stok;
@@ -174,10 +174,10 @@ class ProdukController extends Controller
         $produk->deskripsi = $request->deskripsi;
         $produk->save();
 
-        if($request->has('tags'))
-        {
-            $produk->tags()->attach($request->tags);
-        }
+        // if($request->has('tags'))
+        // {
+        //     $produk->tags()->attach($request->tags);
+        // }
         
         return redirect()
             ->route('produk.index')->with('toast_success', 'Data Berhasil Diubah');

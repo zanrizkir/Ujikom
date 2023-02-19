@@ -17,8 +17,8 @@ class KategoriSeeder extends Seeder
     public function run()
     {
         $kategori = [
-            ['name' => 'Laptop',],
-            ['name' => 'Mouse',],
+            ['name' => 'Laptop','slug' => 'laptop'],
+            ['name' => 'Mouse','slug' => 'mouse'],
         ];
         DB::table('kategoris')->insert($kategori);
     }
