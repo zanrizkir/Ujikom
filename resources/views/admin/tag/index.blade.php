@@ -39,15 +39,11 @@
                                 </div>
                             </td>
                             <td>
-                                <form action="{{ route('tag.destroy', $tags->id) }}" method="post">
+                              <form action="{{ route('tag.destroy', $tags->id) }}" method="post">
+                                <button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#varyModal{{ $tags->id }}"> edit </button>
                                     @csrf
                                     @method('delete')
-                                    <a href="{{ route('tag.edit', $tags->id) }}"
-                                        class="btn btn-sm btn-secondary" data-bs-toggle="tooltip"
-                                        data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
-                                        title="Edit Data">
-                                        edit
-                                    </a> |
+
                                     <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#defaultModal{{ $tags->id }}"> Hapus </button>
                                     <div class="modal fade" id="defaultModal{{ $tags->id }}" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel " aria-hidden="true">
                                       <div class="modal-dialog" role="document">
@@ -82,6 +78,7 @@
 </div>
 
 
+@include('admin.tag.edit')
 
     
 

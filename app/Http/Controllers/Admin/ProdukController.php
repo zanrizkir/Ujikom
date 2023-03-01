@@ -30,7 +30,7 @@ class ProdukController extends Controller
         // return view('admin.produk.index',['active' => 'produk'], compact('produk'));
 
         return view('admin.produk.index',['active' => 'produk'])->with([
-            'produk' => Produk::with(['kategori','tags'])->latest()->paginate(8),
+            'produk' => Produk::with(['kategori','tags'])->latest()->paginate(10),
         ]);
 
     }
@@ -118,10 +118,15 @@ class ProdukController extends Controller
      */
     public function show($id)
     {
+        
+        // return view('admin.produk.show',['active' => 'produk'],compact('images'))->with([
+            //     'produk' => Produk::findOrFail($id)->with(['kategori','tags']),
+            // ]);
+            
+        $images = Image::where('produk_id', $id)->get();
         $produk = Produk::findOrFail($id);
         $kategoris = Kategori::all();
-        $tags = Tag::all();
-        $images = Image::where('produk_id', $id)->get();
+        $tags = ProdukTag::where('produk_id', $id)->get();
         return view('admin.produk.show',['active' => 'produk'], compact('kategoris', 'produk', 'tags', 'images'));
         
     }
@@ -173,6 +178,15 @@ class ProdukController extends Controller
         $produk->diskon = $request->diskon;
         $produk->deskripsi = $request->deskripsi;
         $produk->save();
+
+        $tags = ProdukTag::where('produk_id',$produk->id)->delete();
+        foreach ($request->tags as $tag){
+            $tags = new ProdukTag();
+            $tags->produk_id = $produk->id;
+            $tags->tag_id = $tag;
+            $tags->save();
+
+        }
 
         // if($request->has('tags'))
         // {

@@ -57,18 +57,17 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('getcity/{id}', [AlamatController::class, 'getCities']);
 });
 
+Route::get('/produk', [FrontController::class, 'produkuser']);
+Route::get('/detailproduk/{produk}', [FrontController::class, 'produkdetail']);
 Route::middleware('auth')->group (function () {
     Route::resource('/keranjang', App\Http\Controllers\KeranjangController::class);
     Route::resource('/checkout', App\Http\Controllers\CheckoutController::class);
+    Route::resource('/alamat',AlamatController::class);
+    Route::get('/thanks',[App\Http\Controllers\CheckoutController::class, 'thank']);
     Route::get('/profile', [App\Http\Controllers\FrontController::class, 'profileuser']);
-    Route::get('/detailproduk/{produk}', [FrontController::class, 'produkdetail']);
+    Route::get('getcity/{id}', [AlamatController::class, 'getCities']);
 });
 Route::get('/', [App\Http\Controllers\FrontController::class, 'user']);
-Route::get('/produk', [FrontController::class, 'produkuser']);
-// Route::get('/produk', [FrontController::class, 'tag']);
-Route::get('/tag', [\App\Http\Controllers\ShopController::class, 'tag'])->name('shop.tag');
-
 Auth::routes();
-
 
 

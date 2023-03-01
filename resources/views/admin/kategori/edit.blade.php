@@ -1,12 +1,14 @@
-<div class="modal fade" id="editModal{{ $kategori->id }}" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="varyModal{{ $kategoris->id }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editModalLabel">Kategori</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
             <div class="modal-body">
-                <form action="{{ route('kategori.update', $kategori->id) }}" method="post">
+                <form action="{{ route('kategori.update', $kategoris->id) }}" method="post">
                     @csrf
                     @method('put')
                     <div class="col mb-3">
@@ -14,7 +16,7 @@
                             Kategori</label>
                         <input type="text" name="name"
                             class="form-control mb-2  @error('name') is-invalid @enderror" placeholder="Nama Kategori"
-                            value="{{ $kategori->name }}">
+                            value="{{ $kategoris->name }}">
                         @error('name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -31,4 +33,4 @@
             </form>
         </div>
     </div>
-</div>
+  </div>                        

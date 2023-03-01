@@ -21,14 +21,6 @@
                   @endforeach
                 </optgroup>
               </select>
-              {{-- <select name="kategori_id" id="kategori"
-              class="form-control @error('kategori_id') is-invalid @enderror">
-              @foreach ($kategoris as $kategori)
-                  <option value="" hidden>Pilih Kategori</option>
-                  <option value="{{ $kategori->id }}">{{ $kategori->name }}
-                  </option>
-              @endforeach
-              </select> --}}
               @error('kategori_id')
                   <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -50,7 +42,7 @@
           </div>
             <div class="form-group mb-3">
               <label for="example-password">Nama Produk</label>
-              <input type="text" id="name" name="name" class="form-control"  @error('name') is-invalid @enderror 
+              <input type="text" id="name" name="name" class="form-control  @error('name') is-invalid @enderror "
               placeholder="Nama Produk" value="{{ old('name') }}">
               @error('name')
                   <span class="invalid-feedback" role="alert">
@@ -58,31 +50,21 @@
                   </span>
               @enderror
             </div>
-            {{-- <div class="form-group mb-3">
-              <label for="example-password">Slug</label>
-              <input type="text" id="slug" name="slug"
-              class="form-control"  @error('slug') is-invalid @enderror value="{{ old('slug') }}" disabled readonly>
-              @error('slug')
-                  <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-              @enderror
-            </div> --}}
             <div class="form-group mb-3">
               <label for="example-palaceholder">Hpp Produk</label>
-              <input type="number" min="1"  name="hpp" class="form-control" @error('hpp') is-invalid @enderror
+              <input type="number" onkeypress="return hanyaAngka(event)" min="1"  name="hpp" class="form-control" @error('hpp') is-invalid @enderror
               placeholder="Hpp Produk" value="{{ old('name_produk') }}">
             </div>
             <div class="form-group mb-3">
               <label for="example-palaceholder">Harga Produk</label>
-              <input type="number" min="1" name="harga" class="form-control" @error('harga') is-invalid @enderror
+              <input type="number" onkeypress="return hanyaAngka(event)" min="1" name="harga" class="form-control @error('harga') is-invalid @enderror" 
               placeholder="Harga Produk" value="{{ old('name_produk') }}">
             </div>
             <div class="form-group mb-3">
               <label for="example-palaceholder">Stock Produk</label>
-              <input type="number" min="1" name="stok"
+              <input type="number" onkeypress="return hanyaAngka(event)" min="1" name="stok"
               class="form-control @error('stok') is-invalid @enderror" placeholder="stok Produk"
-              value="0">
+              value="{{ old('stok') }}">
               @error('stok')
                   <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -92,7 +74,7 @@
             <div class="form-group mb-3">
               <label for="example-palaceholder">Diskon Produk</label>
               <div class="input-group mb-3">
-                <input type="number" name="diskon" min="0"
+                <input type="number" onkeypress="return hanyaAngka(event)" name="diskon" min="0"
                     class="form-control  @error('diskon') is-invalid @enderror"
                     placeholder="diskon Produk" value="0">
                 <button class="btn btn-secondary mb-2" type="button">%</button>
@@ -119,7 +101,7 @@
               
               <div class="custom-file">
                 <input type="file" class="form-control-file @error('gambar_produk') is-invalid @enderror"
-                    name="gambar_produk[]" value="{{ old('gambar_produk[]') }}" multiple>
+                    name="gambar_produk[]" value="{{ old('gambar_produk') }}" multiple>
                 @error('gambar_produk')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -156,16 +138,13 @@
   });
 </script>
 <script>
-  const name = document.querySelector('#name');
-  const slug = document.querySelector('#slug');
-
-  name.addEventListener('change', function(){
-    fetch('/  produk/checkSlug?name=' + name.value)
-      .then(response => response.json())
-      .then(data => slug.value = data.slug)
-  });
+  function hanyaAngka(event) {
+      var angka = (event.which) ? event.which : event.keyCode
+      if (angka != 46 && angka > 31 && (angka < 48 || angka > 57))
+          return false;
+      return true;
+  }
 </script>
-
 
 
 @endsection

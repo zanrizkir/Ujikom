@@ -1,8 +1,7 @@
 @extends('template.template')
-
-
 @section('content')
     <!-- SECTION -->
+
     <div class="section">
         <!-- container -->
         <div class="container">
@@ -11,24 +10,11 @@
                 <!-- Product main img -->
                 <div class="col-md-5 col-md-push-2">
                     <div id="product-main-img">
-                        <div class="product-preview">
-                            <img src="{{ asset($produk->image[0]->gambar_produk) }}" alt="">
-                        </div>
-
-                        <div class="product-preview">
-                            <img src="{{ asset($produk->image[1]->gambar_produk) }}" alt="">
-                        </div>
-                        <div class="product-preview">
-                            <img src="{{ asset($produk->image[2]->gambar_produk) }}" alt="">
-                        </div>
-
-                        {{-- <div class="product-preview">
-                            <img src="{{ asset('components/img/product06.png') }}" alt="">
-                        </div>
-
-                        <div class="product-preview">
-                            <img src="{{ asset('components/img/product08.png') }}" alt="">
-                        </div> --}}
+                        @foreach ($images as $image)
+                            <div class="product-preview">
+                                <img src="{{ asset($image->gambar_produk) }}" alt="">
+                            </div>
+                        @endforeach
                     </div>
                 </div>
                 <!-- /Product main img -->
@@ -36,23 +22,11 @@
                 <!-- Product thumb imgs -->
                 <div class="col-md-2  col-md-pull-5">
                     <div id="product-imgs">
-                        <div class="product-preview">
-                            <img src="{{ asset($produk->image[0]->gambar_produk) }}" alt="">
-                        </div>
-
-                        <div class="product-preview">
-                            <img src="{{ asset($produk->image[1]->gambar_produk) }}" alt="">
-                        </div>
-                        <div class="product-preview">
-                            <img src="{{ asset($produk->image[2]->gambar_produk) }}" alt="">
-                        </div>
-                        {{-- <div class="product-preview">
-                            <img src="{{ asset('components/img/product06.png') }}" alt="">
-                        </div>
-
-                        <div class="product-preview">
-                            <img src="{{ asset('components/img/product08.png') }}" alt="">
-                        </div> --}}
+                        @foreach ($images as $image)
+                            <div class="product-preview">
+                                <img src="{{ asset($image->gambar_produk) }}" alt="">
+                            </div>
+                        @endforeach
                     </div>
                 </div>
                 <!-- /Product thumb imgs -->
@@ -76,7 +50,18 @@
                                 {{-- <a class="review-link" href="#">10 Review(s) | Add your review</a> --}}
                             </div>
                             <div>
-                                <h3 class="product-price">Rp. {{ number_format($produk->harga, 0, '.', '.') }}</h3>
+                                @if ($produk->diskon > 0)
+                                    <?php
+                                    $diskon = ($produk->diskon / 100) * $produk->harga;
+                                    $harga = $produk->harga - $diskon;
+                                    ?>
+                                    <h5 class="product-price">Rp.
+                                        {{ number_format($harga, 0, '.', '.') }} <del class="product-old-price">Rp.
+                                            {{ number_format($produk->harga, 0, '.', '.') }}</del></h5>
+                                @else
+                                    <h4 class="product-price">Rp. {{ number_format($produk->harga, 0, '.', '.') }}
+                                @endif
+                                {{-- <h3 class="product-price">Rp. {{ number_format($produk->harga, 0, '.', '.') }}</h3> --}}
                                 <span class="product-available">Stok :{{ $produk->stok }}</span>
                             </div>
                             <p>{!! $produk->deskripsi !!}</p>
@@ -85,14 +70,41 @@
                             <div class="add-to-cart">
                                 <div class="qty-label">
                                     Qty
-                                    {{-- <div class="input-number"> --}}
-                                    <input type="number" name="jumlah">
-                                    {{-- <span class="qty-up">+</span>
-                                    <span class="qty-down">-</span> --}}
-                                    {{-- </div> --}}
+                                    <input type="number" name="jumlah" min="0">
                                 </div>
-                                <button class="add-to-cart-btn" type="submit"><i class="fa fa-shopping-cart"></i>
-                                    Keranjang</button>
+                                @guest
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="add-to-cart-btn" onclick="notif()"><i class="fa fa-shopping-cart"></i>
+                                        Keranjang
+                                    </button>
+                                    <!-- Modal -->
+                                    {{-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Pemberitahuan !</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Anda Harus Login Terlebih Dulu!</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Tutup</button>
+                                                    <button type="button" class="btn btn-danger"><a
+                                                            href="{{ route('login') }}">Login</a></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> --}}
+                                @else
+                                    <button class="add-to-cart-btn" type="submit"><i class="fa fa-shopping-cart"></i>
+                                        Keranjang</button>
+                                @endguest
                             </div>
 
 
@@ -102,9 +114,8 @@
                             </ul>
 
                             <ul class="product-links">
-                                <li>Category:</li>
-                                <li><a href="#">Headphones</a></li>
-                                <li><a href="#">Accessories</a></li>
+                                <li>Kategori:</li>
+                                {{-- <li><a href="#">{{ $produk->kategori->name }}</a></li> --}}
                             </ul>
 
                             <ul class="product-links">
@@ -545,3 +556,13 @@
     </div>
     <!-- /NEWSLETTER -->
 @endsection
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript">
+    function notif() {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Anda Harus Login Terlebih Dahulu !',
+        })
+    }
+</script>

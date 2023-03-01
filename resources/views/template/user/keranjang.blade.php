@@ -20,101 +20,116 @@
     <div class="cart-section mt-150 mb-150">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 col-md-12">
+                <div class="col-lg-9 col-md-12">
                     <div class="cart-table-wrap">
-                        <table class="cart-table">
+                        <table class="cart-table" id="keranjang" class="keranjangAll">
                             <thead class="cart-table-head">
                                 <tr class="table-head-row">
-                                    <th class="product-remove"></th>
+                                    <th class="product-remove"><input type="checkbox" id="selectAll"></th>
                                     <th class="product-image">Produk</th>
                                     <th class="product-name">Nama Produk</th>
                                     <th class="product-price">Harga</th>
                                     <th class="product-quantity">Jumlah</th>
-                                    <th class="product-total">Total</th>
                                     <th class="product-disc">Diskon</th>
                                     <th class="product-totalharga">Total Harga</th>
+                                    <th class="product-remove">Hapus</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if (count($keranjangs))
                                     @foreach ($keranjangs as $keranjang)
                                         <form action="{{ route('checkout.index') }}" method="GET">
-                                            @csrf
+
                                             {{-- <input type="hidden" name="keranjang_id" value="{{ $keranjang->id }}"> --}}
                                             <input type="hidden" name="user_id" value="1">
                                             <input type="hidden" name="produk_id" value="{{ $keranjang->produk->id }}">
                                             <tr class="table-body-row">
-                                                <td class="product-remove"> <input type="checkbox"name="keranjang_id[]"
-                                                        value="{{ $keranjang->id }}"></td>
-                                                <td class="product-image"><img
-                                                        src="{{ asset($keranjang->produk->image[0]->gambar_produk) }}"
-                                                        alt=""></td>
-                                                <td class="product-name">{{ $keranjang->produk->nama_produk }}</td>
-                                                <td class="product-price"> RP.
-                                                    {{ number_format($keranjang->produk->harga, 0, ',', '.') }}</td>
-                                                <td class="product-quantity"><input type="number" name="jumlah"
-                                                        value="{{ $keranjang->jumlah }}">
-                                                </td>
-                                                <td class="product-total">{{ $keranjang->jumlah }}</td>
+                                                <td class="product-remove"> <input id="keranjang_id" class="keranjang_id" data-harga="{{ $keranjang->total_harga }}" type="checkbox"name="keranjang_id[]" value="{{ $keranjang->id }}"></td>
+                                                <td class="product-image"><img src="{{ asset($keranjang->produk->image[0]->gambar_produk) }}" alt=""></td>
+                                                <td class="product-name">{{ $keranjang->produk->name }}</td>
+                                                <td class="product-price"> RP. {{ number_format($keranjang->produk->harga, 0, ',', '.') }}</td>
+                                                <td class="product-quantity"><input type="number" min="0" name="jumlah" value="{{ $keranjang->jumlah }}" onkeypress="return hanyaAngka(event)"></td>
                                                 <td class="product-disc">{{ $keranjang->produk->diskon }}</td>
-                                                <td class="product-totalharga">RP.
-                                                    {{ number_format($keranjang->total_harga, 0, ',', '.') }}</td>
+                                                <td class="product-totalharga">RP. {{ number_format($keranjang->total_harga, 0, ',', '.') }}</td>
+                                                <td>
+                                                    <button class="add-to-cart-btn"><a href=" route('keranjang.destroy', $keranjang->id) " onclick="return confirm('Apakah Anda Yakin')">X</a></button>
+                                                </td>
                                             </tr>
                                     @endforeach
                                 @endif
-
 
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-md-3 order-details pull-right" style="margin-top: 20px">
                     <div class="section-title text-center">
-                        <h4>Your Order</h4>
+                        <h4 class="title">Keranjangmu</h3>
                     </div>
                     <div class="order-summary">
                         <div class="order-col">
-                            <div><strong>Jumlah</strong></div>
-                            <div><strong>Total Harga</strong></div>
+                            <div><strong>JUMLAH</strong></div>
+                            <div><strong>TOTAL HARGA</strong></div>
                         </div>
-
-
                         <div class="order-products">
                             <div class="order-col">
-                                {{-- <div>{{ $transaksi->keranjang->produk->nama_produk }}</div>
-                                    <div> RP. {{ number_format($transaksi->keranjang->produk->harga, 0, ',', '.') }}</div>
-                                    <div>{{ $transaksi->keranjang->jumlah }}</div> --}}
+                                <div id="jumlah">0</div>
+                                <div id="total_harga">0</div>
                             </div>
                         </div>
                     </div>
-                    <button class="primary-btn order-submit" type="submit">
-                        Checkout</button>
 
+
+                    <button class="primary-btn order-submit pull-right" style="margin-top: 20px" type="submit">
+                        Pesan</button>
                     </form>
-                    {{-- <a href="#" class="primary-btn order-submit">Place order</a> --}}
                 </div>
-                {{-- <div class="col-lg-4">
-                    <div class="total-section">
-                        <div class="cart-buttons">
-                            <a href="#" class="boxed-btn">Update Cart</a>
-                            <a href="#" class="boxed-btn">Checkout</a>
-                            <button class="boxed-btn" type="submit">
-                                Checkout</button>
-                        </div>
-                    </div>
-
-                    <div class="coupon-section">
-                        <h3>Apply Coupon</h3>
-                        <div class="coupon-form-wrap">
-                            <form action="index.html">
-                                <p><input type="text" placeholder="Coupon"></p>
-                                <p><input type="submit" value="Apply"></p>
-                            </form>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
         </div>
     </div>
     <!-- end cart -->
 @endsection
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+        $("#selectAll").click(function() {
+            $('.keranjang_id').prop("checked", $(this).prop("checked"));
+
+            var total_harga = 0;
+            var jumlah = 0;
+            $('.keranjang_id').each(function() {
+                if ($(this).prop("checked") == true) {
+                    jumlah++;
+                    var keranjang = $(this).data('harga');
+                    total_harga += parseInt(keranjang)
+                };
+            });
+            $("#total_harga").html(total_harga);
+            $("#jumlah").html(jumlah);
+
+
+        });
+        $('.keranjang_id').click(function() {
+            var total_harga = 0;
+            var jumlah = 0;
+            $('.keranjang_id').each(function() {
+                if ($(this).prop("checked") == true) {
+                    jumlah++;
+                    var keranjang = $(this).data('harga');
+                    total_harga += parseInt(keranjang)
+                };
+            });
+            $("#total_harga").html(total_harga);
+            $("#jumlah").html(jumlah);
+        });
+    });
+</script>
+<script>
+    function hanyaAngka(event) {
+        var angka = (event.which) ? event.which : event.keyCode
+        if (angka != 46 && angka > 31 && (angka < 48 || angka > 57))
+            return false;
+        return true;
+    }
+</script>

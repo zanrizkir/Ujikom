@@ -2,115 +2,102 @@
 
 @section('content')
 
-    <div class="row">
-        <div class="col-md-6">
-            @include('sweetalert::alert')
-            <div class="card shadow-lg mb-4">
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow-lg mb-4">
             <div class="card-header">
                 <strong class="card-title">Data Produk</strong>
             </div>
-            <form action="{{ route('produk.update',$produk->id) }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('put')
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                        <div class="form-group mb-3">
-                            <label class="form-label">Name Kategori</label>
-                            <select name="kategori_id" id="kategori"
-                                class="form-control " disabled>
-                                @foreach ($kategoris as $kategori)
-                                    @if (old('kategori_id', $kategori->id) == $produk->kategori->id)
-                                        <option value="{{ $kategori->id }}" selected>
-                                            {{ $kategori->name }}</option>
-                                    @else
-                                        <option value="{{ $kategori->id }}">{{ $kategori->name }}
-                                        </option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Sub Kategori</label>
-
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="example-password">Nama Produk</label>
-                            <input type="text" name="nama_produk" class="form-control"   
-                            placeholder="Nama Produk" value="{{ $produk->nama_produk }}" disabled>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="example-palaceholder">Hpp Produk</label>
-                            <input type="number" name="hpp" class="form-control"
-                            placeholder="Hpp Produk" value="{{ $produk->hpp }}" disabled>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="example-palaceholder">Harga Produk</label>
-                            <input type="number" name="harga" class="form-control" 
-                            placeholder="Harga Produk" value="{{ $produk->harga }}" disabled>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="example-palaceholder">Stock Produk</label>
-                            <input type="number" name="stok"
-                            class="form-control " placeholder="stok Produk"
-                            value="{{ $produk->stok }}" disabled>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="example-palaceholder">Diskon Produk</label>
-                            <div class="input-group mb-3">
-                            <input type="number" name="diskon"
-                                class="form-control "
-                                placeholder="diskon Produk" value="{{ $produk->diskon }}" disabled>
-                            <button class="btn btn-secondary mb-2" type="button" disabled>%</button>
-                            </div>
-                        </div>
+            <div class="card-body">
+                <div class="table-responsive text-nowrap">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>Kategori</strong>
+                                </td>
+                                <td>{{ $produk->kategori->name }}</td>
+                            </tr>
+                            <tr>
+                                    <td>
+                                        <strong>Tag</strong>
+                                    </td>
+                                    <td>
+                                        @foreach($tags as $tag)
+                                        <ul>
+                                            <li>
+                                                {{ $tag->tag->name }}
+                                                {{-- {{ dd($tag) }} --}}
+                                            </li>
+                                        </ul>
+                                        @endforeach
+                                    </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Nama Produk</strong>
+                                </td>
+                                <td> {{ $produk->name }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Harga Jual</strong>
+                                </td>
+                                <td>Rp. {{ number_format($produk->harga, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <th><strong> stok</strong></th>
+                                <th> {{ number_format($produk->stok, 0, ',', '.') }}
+                                    </strong></th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Diskon</strong>
+                                </td>
+                                <td> {{ $produk->diskon }}</td>
+                            </tr>
+                        </tbody>
+                        
+                        {{-- </tfoot> --}}
+                    </table>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <strong>Deskripsi </strong>
                         <div class="card mb-3">
                             <div class="card-body">
-
                                 {!! $produk->deskripsi !!}
                             </div>
                         </div>
-                        {{-- <div class="form-group mb-3">
-                            <label for="example-palaceholder">Deskripsi</label>
-                            <textarea name="deskripsi" cols="20" rows="5"
-                                class="form-control  " placeholder="deskripsi"
-                                value="{!! $produk->deskripsi !!}" disabled>{{ $produk->deskripsi }}</textarea>
-                        </div> --}}
-                        
-                    </div> <!-- /.col -->
-                </div>
-                <div class="d-flex float-end">
-                    <div class="col">
-                        <a href="/admin/produk" class="btn btn-primary">Kembali</a>
                     </div>
                 </div>
-                </div>
-            </form>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card shadow-lg mb-4">
-                <div class="card-header">
-                    <strong class="card-title">Gambar Produk</strong>
-                </div>
-                <div class="card-body">
-                    
-                    <div class="row mb-3">
-                        @foreach ($images as $img)
-                            <div class="col-md-6 mb-3 col-lg-6">
-                                <div class="card-group">
-                                    <div class="card shadow">
-                                        <img src="{{ asset($img->gambar_produk) }}" class="card-img-top" alt="...">
-                                        
-                                    </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow-lg mb-4">
+            <div class="card-header">
+                <strong class="card-title">Gambar Produk</strong>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    @foreach ($images as $img)
+                        <div class="col-md-6 mb-4 col-lg-6">
+                            <div class="card-group">
+                                <div class="card shadow">
+                                    <img src="{{ asset($img->gambar_produk) }}" class="card-img" style="height:200px ; width:210px ;" alt="...">
+
                                 </div>
                             </div>
-                        @endforeach
-                    </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
-    </div>  
-
+    </div>
+</div>
+<div class="d-flex justify-content-start">
+    <a href="{{ url('/admin/produk') }}" class="btn btn-danger me-3"> Kembali</a>
+</div>
 
 @endsection

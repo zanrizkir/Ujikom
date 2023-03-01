@@ -6,6 +6,7 @@ use App\Models\Admin\Tag;
 use App\Models\Admin\Image;
 use App\Models\Admin\Kategori;
 use App\Models\Admin\Keranjang;
+use App\Models\Admin\ProdukTag;
 use App\Models\Admin\RiwayatProduk;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -41,6 +42,11 @@ class Produk extends Model
     {
         return $this->belongsToMany(Tag::class)->as('tags');
     }
+
+    public function produkTag()
+    {
+        return $this->hasMany(ProdukTag::class,'produk_id');
+    } 
 
     public  function getRouteKeyName(){
         return 'slug';

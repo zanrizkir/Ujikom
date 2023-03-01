@@ -156,7 +156,7 @@
                             <div class="col-md-6 mb-3 col-lg-6">
                                 <div class="card-group">
                                     <div class="card shadow">
-                                        <img src="{{ asset($img->gambar_produk) }}" class="card-img-top" alt="...">
+                                        <img src="{{ asset($img->gambar_produk) }}" style="height:200px ; width:210px ;" class="card-img-top" alt="...">
                                         <div class="card-body">
                                            <form action="{{ Route('image.destroy', $img->id) }}" method="POST">
                                             @csrf

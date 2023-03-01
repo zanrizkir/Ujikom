@@ -50,7 +50,7 @@ class TagController extends Controller
 
         $tag = new Tag();
         $tag->name = $request->name;
-        $tag->slug = Str::slug($request->nama_produk, '-');
+        $tag->slug = Str::slug($request->name, '-');
 
         $tag->save();
         return redirect()
@@ -96,7 +96,7 @@ class TagController extends Controller
 
         $tag = Tag::findOrFail($id);
         $tag->name = $request->name;
-        $tag->slug = Str::slug($request->nama_produk, '-');
+        $tag->slug = Str::slug($request->name, '-');
         $tag->save();
         return redirect()
             ->route('tag.index')->with('toast_success', 'Data Berhasil Diubah');

@@ -54,7 +54,7 @@ class KategoriController extends Controller
 
         $kategori = new Kategori();
         $kategori->name = $request->name;
-        $kategori->slug = Str::slug($request->nama_produk, '-');
+        $kategori->slug = Str::slug($request->name, '-');
 
         
         $kategori->save();
@@ -104,7 +104,7 @@ class KategoriController extends Controller
         $validasiData = $request->validate($rules);
 
         $kategori->name = $request->name;
-        $kategori->slug = Str::slug($request->nama_produk, '-');
+        $kategori->slug = Str::slug($request->name, '-');
 
         $kategori->save();
         return redirect()
@@ -120,11 +120,11 @@ class KategoriController extends Controller
     public function destroy($id)
     {
 
+        
+        $kategori = Kategori::findOrFail($id);
         if (!Kategori::destroy($id)){
             return redirect()->back();
         }
-
-        $kategori = Kategori::findOrFail($id);
         $kategori->delete();
         return redirect()
             ->route('kategori.index')->with('toast_success', 'Data Berhasil Dihapus');

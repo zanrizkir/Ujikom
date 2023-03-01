@@ -13,6 +13,8 @@ use App\Models\Admin\Produk;
 use Illuminate\Http\Request;
 use App\Models\Admin\Kategori;
 use App\Http\Controllers\Controller;
+use App\Models\Admin\ProdukTag;
+use Illuminate\Support\Facades\DB;
 
 class FrontController extends Controller
 {
@@ -30,26 +32,40 @@ class FrontController extends Controller
     }
     public function produkuser(Request $request)
     {
-        $produk = Produk::with('kategori','image')->get();
-        // $images = Image::all();
-        // $kategoris = Kategori::all();
-        return view('template.user.produk', compact('produk'));
+        $tag = $request->all();
+        
+        $produk = Produk::with('image')->get();
+        $kategori = $request->all();
+        if ($kategori ) {
+            $produk = Produk::where('kategori_id', $kategori['kategori'])->get();
+        }
+        if ($tag ) {
+            $produk = Produk::where('tag_id', $tag['tag'])->get();
+        }
+        
+        // $produk = $produk->get();
+        $kategoris = Kategori::all();
+        $tags = Tag::all();
+        // dd($tag);
+        return view('template.user.produk', compact('produk','kategoris','tags'));
     }
 
     public function produkdetail(Produk $produk, Image $images)
     {
+        $images = Image::where('produk_id' , $produk->id)->get();
+        // dd($kategori);
         return view('template.user.detailproduk', compact('produk', 'images'));
     }
-
-    // public function tag()
-    // {
-    //     $tag_slug = Tag::all();
-    //     // dd($tag_slug);
-    //     return view('template.user.produk',compact('tag_slug'));
-    // }
-    
-    public function user()
+    public function user(Request $request)
     {
-        return view('user');
+        $kategori = $request->all();
+        $produk = Produk::with('image')->get();
+        if ($kategori) {
+            $produk = Produk::where('kategori_id', $kategori['kategori'])->get();
+        }
+        $kategoris = Kategori::all();
+        return view('user', compact('produk','kategoris'));
     }
+    
+    
 }

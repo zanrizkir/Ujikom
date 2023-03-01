@@ -89,13 +89,13 @@
                                     class="btn btn-sm btn-warning" data-bs-toggle="tooltip"
                                     data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
                                     title="Show Data">
-                                    S
+                                    Shi
                                 </a> |
                                 <a href="{{ route('produk.edit', $pro->id) }}"
                                     class="btn btn-sm btn-secondary" data-bs-toggle="tooltip"
                                     data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
                                     title="Edit Data">
-                                    edit
+                                    Edit
                                 </a> |
                                 <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#defaultModal{{ $pro->id }}"> Hapus </button>
                                 <div class="modal fade" id="defaultModal{{ $pro->id }}" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
@@ -170,13 +170,13 @@
                                   class="btn btn-sm btn-warning" data-bs-toggle="tooltip"
                                   data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
                                   title="Show Data">
-                                  S
+                                  Show
                               </a> |
                               <a href="{{ route('produk.edit', $pro->id) }}"
                                   class="btn btn-sm btn-secondary" data-bs-toggle="tooltip"
                                   data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
                                   title="Edit Data">
-                                  edit
+                                  Edit
                               </a> |
                               <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#defaultModal{{ $pro->id }}"> Hapus </button>
                               <div class="modal fade" id="defaultModal{{ $pro->id }}" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">

@@ -412,7 +412,7 @@ p:last-child {
 a.boxed-btn {
   font-family: 'Poppins', sans-serif;
   display: inline-block;
-  background-color: #F28123;
+  background-color: #D10024;
   color: #fff;
   padding: 10px 20px;
 }
@@ -1014,7 +1014,7 @@ a.boxed-btn {
 
 a.boxed-btn:hover {
   background-color: #051922;
-  color: #F28123;
+  color: #Ffffff;
 }
 
 a.bordered-btn {
@@ -1399,7 +1399,7 @@ html, body {
 }
 
 .hero-text p.subtitle {
-  color: #F28123;
+  color: #000000;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 7px;
@@ -1456,7 +1456,7 @@ html, body {
 }
 
 input[type="submit"] {
-  background-color: #F28123;
+  background-color: #D10024;
   color: #051922;
   font-weight: 700;
   text-transform: uppercase;
@@ -1525,7 +1525,7 @@ input[type="submit"] {
 div.owl-controls, .owl-controls div {
   height: auto;
   top: 50%;
-  color: #F28123;
+  color: #D10024;
   font-size: 48px;
 }
 
