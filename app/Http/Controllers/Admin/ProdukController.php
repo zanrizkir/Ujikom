@@ -116,17 +116,17 @@ class ProdukController extends Controller
      * @param  \App\Models\Produk  $produk
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
         
         // return view('admin.produk.show',['active' => 'produk'],compact('images'))->with([
             //     'produk' => Produk::findOrFail($id)->with(['kategori','tags']),
             // ]);
             
-        $images = Image::where('produk_id', $id)->get();
-        $produk = Produk::findOrFail($id);
+        $produk = Produk::findBySlug($slug);
         $kategoris = Kategori::all();
-        $tags = ProdukTag::where('produk_id', $id)->get();
+        $tags = ProdukTag::where('produk_id', $produk->id)->get();
+        $images = Image::where('produk_id', $produk->id)->get();
         return view('admin.produk.show',['active' => 'produk'], compact('kategoris', 'produk', 'tags', 'images'));
         
     }
@@ -137,12 +137,12 @@ class ProdukController extends Controller
      * @param  \App\Models\Produk  $produk
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        $produk = Produk::findOrFail($id);
+        $produk = Produk::findBySlug($slug);
         $kategoris = Kategori::all();
         $tags = Tag::latest()->get(['id', 'name']);
-        $images = Image::where('produk_id', $id)->get();
+        $images = Image::where('produk_id', $produk->id)->get();
         // dd($images);
         return view('admin.produk.edit',['active' => 'produk'], compact('kategoris', 'produk','tags', 'images'));
 

@@ -115,15 +115,14 @@
 
                             <ul class="product-links">
                                 <li>Kategori:</li>
-                                {{-- <li><a href="#">{{ $produk->kategori->name }}</a></li> --}}
+                                <li><a href="#">{{ $produk->kategori->name }}</a></li>
                             </ul>
 
                             <ul class="product-links">
-                                <li>Share:</li>
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                <li><a href="#"><i class="fa fa-envelope"></i></a></li>
+                                <li>Tag:</li>
+                                @foreach($tags as $tag)
+                                    <li><a href="#">{{ $tag->tag->name }}</a></li>
+                                @endforeach
                             </ul>
 
                         </div>

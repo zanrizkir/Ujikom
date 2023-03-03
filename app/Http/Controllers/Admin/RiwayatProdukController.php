@@ -45,16 +45,16 @@ class RiwayatProdukController extends Controller
     {
         $validated = $request->validate([
             'produk_id' => 'required',
-            'type' => 'required',
+            // 'type' => 'required',
             'qty' => 'required',
-            'note' => 'required',
+            // 'note' => 'required',
         ]);
 
         $riwayat = new RiwayatProduk();
         $riwayat->produk_id = $request->produk_id;
-        $riwayat->type = $request->type;
+        $riwayat->type = 'masuk';
         $riwayat->qty = $request->qty;
-        $riwayat->note = $request->note;
+        // $riwayat->note = $request->note;
         $riwayat->save();
 
         $produks = Produk::findOrFail($riwayat->produk_id);

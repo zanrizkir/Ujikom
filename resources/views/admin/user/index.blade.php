@@ -19,7 +19,7 @@
                                         <th>No</th>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <th>Saldo</th>
+                                        {{-- <th>Saldo</th> --}}
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -45,11 +45,11 @@
                                                 </td>
                                                 
                                                 
-                                                <td>
+                                                {{-- <td>
                                                     <div class="d-flex">
                                                         Rp. {{ number_format($user->saldo, 0, ',', '.') }}
                                                     </div>
-                                                </td>
+                                                </td> --}}
                                                
                                                 
                                                 <td>

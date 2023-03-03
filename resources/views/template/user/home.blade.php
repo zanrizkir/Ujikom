@@ -25,7 +25,7 @@
         <div class="single-homepage-slider homepage-bg-2">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-10 offset-lg-1 text-center">
+                    <div class="col-lg-10 offset-lg-1 text-cseenter">
                         <div class="hero-text">
                             <div class="hero-text-tablecell">
                                 <p class="subtitle">Fresh Everyday</p>

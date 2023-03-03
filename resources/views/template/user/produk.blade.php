@@ -26,18 +26,18 @@
                     </div>
                     <div class="aside">
                         <h3 class="aside-title">Tag</h3>
-                        @foreach ($tags as $tag)
+                       {{-- @foreach ($tags as $tag)
                             <div class="checkbox-filter">
                                 <div class="input-checkbox">
                                     <input type="checkbox" id="category-1">
                                     <label for="category-1">
                                         <span></span>
                                         <a href="{{ url('produk') }}?tag={{ $tag->id }}">{{ $tag->name }}</a>
-                                        {{-- <small>({{ $tag->produk->count() }})</small> --}}
+                                         <small>({{ $tag->produk->count() }})</small> 
                                     </label>
                                 </div>
                             </div>
-                        @endforeach
+                        @endforeach--}}
                     </div>
                     <!-- /aside Widget -->
                 </div>
@@ -52,7 +52,7 @@
                             <div class="col-md-4 col-xs-6">
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="{{ asset($data->image[0]->gambar_produk) }}" alt="">
+                                        <img src="{{ asset($data->image[0]->gambar_produk) }}" style="height:200px ; width:265px ;" alt="">
                                         <div class="product-label">
                                             <span class="sale">{{ $data->diskon }}%</span>
                                             {{-- <span class="new">NEW</span> --}}

@@ -52,7 +52,11 @@
                                                 <td class="product-disc">{{ $keranjang->produk->diskon }}</td>
                                                 <td class="product-totalharga">RP. {{ number_format($keranjang->total_harga, 0, ',', '.') }}</td>
                                                 <td>
-                                                    <button class="add-to-cart-btn"><a href=" route('keranjang.destroy', $keranjang->id) " onclick="return confirm('Apakah Anda Yakin')">X</a></button>
+                                                    <form action="{{ route('keranjang.destroy', $keranjang->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin?')">X</button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                     @endforeach

@@ -19,7 +19,7 @@ class CreateRiwayatProduksTable extends Migration
             $table->foreign('produk_id')->references('id')->on('produks')->onDelete('cascade');
             $table->enum('type', ['masuk', 'keluar']);
             $table->integer('qty');
-            $table->text('note');
+            // $table->text('note');
             $table->timestamps();
         });
     }

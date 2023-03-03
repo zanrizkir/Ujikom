@@ -41,6 +41,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('/tag', TagController::class);
     Route::resource('/subkategori', SubKategoriController::class);
     Route::resource('/produk', ProdukController::class);
+    Route::get('/produk/{slug}', [ProdukController::class, 'show']);
+    Route::get('/produk/{slug}/edit', [ProdukController::class, 'edit']);
     // Route::get('/produk/checkSlug', [ProdukController::class, 'checkSlug']);
     Route::resource('/image', ImageController::class);
     Route::resource('/riwayatProduk', RiwayatProdukController::class);
@@ -61,6 +63,7 @@ Route::get('/produk', [FrontController::class, 'produkuser']);
 Route::get('/detailproduk/{produk}', [FrontController::class, 'produkdetail']);
 Route::middleware('auth')->group (function () {
     Route::resource('/keranjang', App\Http\Controllers\KeranjangController::class);
+    Route::delete('/keranjang/{id}', [KeranjangController::class, 'destroy'])->name('keranjang.destroy');
     Route::resource('/checkout', App\Http\Controllers\CheckoutController::class);
     Route::resource('/alamat',AlamatController::class);
     Route::get('/thanks',[App\Http\Controllers\CheckoutController::class, 'thank']);

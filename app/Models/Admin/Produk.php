@@ -51,4 +51,9 @@ class Produk extends Model
     public  function getRouteKeyName(){
         return 'slug';
     }
+
+    public static function findBySlug($slug)
+    {
+        return self::where('slug', $slug)->firstOrFail();
+    }
 }

@@ -140,7 +140,6 @@ class KeranjangController extends Controller
     {
         $keranjangs = Keranjang::findOrFail($id);
         $keranjangs->delete();
-        return redirect()
-            ->route('keranjang.index')->with('success', 'Data has been deleted');
-}
+        return redirect()->route('keranjang.index')->with('success', 'Produk telah dihapus dari keranjang.');
+    }
 }

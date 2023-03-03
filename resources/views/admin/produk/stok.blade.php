@@ -15,7 +15,7 @@
                   <div class="col mb-3">
                       <label class="form-label">Nama Produk</label>
                       <select name="produk_id"
-                          class="form-control @error('produk_id') is-invalid @enderror">
+                          class="form-control @error('produk_id') is-invalid @enderror" value="{{ old('produk_id') }}">
                           @foreach ($produk as $pro)
                               <option value="" hidden>Pilih Nama Produk</option>
                               <option value="{{ $pro->id }}">{{ $pro->name }}
@@ -31,21 +31,21 @@
                   </div>
                   
               </div>
-              <div class="row g-2">
-                  <div class="col-6 mb-0">
+              <div class="row">
+                  {{-- <div class="col-6 mb-0">
                       <label class="form-label">type</label>
                       <select name="type" class="form-control">
                           <option value="" hidden>Pilih Type</option>
                           <option value="masuk">masuk</option>
                           <option value="keluar">keluar</option>
                       </select>
-                  </div>
-                  <div class="col-6 mb-0">
+                  </div> --}}
+                  <div class="col mb-3">
                       <label class="form-label">qty</label>
-                      <input type="number" min="1" name="qty" class="form-control mb-2" placeholder="qty">
+                      <input type="number"  onkeypress="return hanyaAngka(event)"  name="qty" class="form-control mb-2" placeholder="qty" value="{{ old('qty') }}">
                   </div>
               </div>
-              <div class="row">
+              {{-- <div class="row">
                   <div class="col mb-3">
                       <label class="form-label">Note</label>
                       <input id="note" type="hidden" name="note" class="@error('note') is-invalid @enderror" >
@@ -56,7 +56,7 @@
                           </span>
                       @enderror
                   </div>
-              </div>
+              </div> --}}
               
           </div>
           <div class="modal-footer">
@@ -66,3 +66,12 @@
     </div>
   </div>
 <!-- table -->
+
+<script>
+    function hanyaAngka(event) {
+        var angka = (event.which) ? event.which : event.keyCode
+        if (angka != 46 && angka > 31 && (angka < 48 || angka > 57))
+            return false;
+        return true;
+    }
+  </script>

@@ -18,9 +18,9 @@
                                     <tr>
                                         <th>NO</th>
                                         <th>Nama Produk</th>
-                                        <th>type</th>
+                                        {{-- <th>type</th> --}}
                                         <th>Jumlah</th>
-                                        <th>Note</th>
+                                        {{-- <th>Note</th> --}}
                                         <th>Jam</th>
                                         <th>Tanggal</th>
                                     </tr>
@@ -39,7 +39,7 @@
                                                         {{ $riwayatProduk->produk->name }}
                                                     </div>
                                                 </td>
-                                                <td>
+                                                {{-- <td>
                                                     <div class="d-flex">
                                                         @if ($riwayatProduk->type == 'masuk')
                                                             <div class="badge rounded-pill bg-success w-100">{{ $riwayatProduk->type }}
@@ -49,17 +49,17 @@
                                                             </div>
                                                         @endif
                                                     </div>
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <div class="d-flex">
                                                         {{ $riwayatProduk->qty }}
                                                     </div>
                                                 </td>
-                                                <td>
+                                                {{-- <td>
                                                     <div class="d-flex">
                                                         {!! $riwayatProduk->note !!}
                                                     </div>
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <div class="d-flex">
                                                         {{ $riwayatProduk->created_at->format('h:i:s A') }}
