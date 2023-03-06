@@ -79,7 +79,7 @@ class AlamatController extends Controller
         $alamats->label = $request->label;
         $alamats->save();
         // dd($request->city_id);
-        return redirect()->route('alamat.index')->with('toast_success', 'Data Berhasil Diubah');
+        return redirect()->back()->with('toast_success', 'Data Berhasil Ditambah');
 
 
     }

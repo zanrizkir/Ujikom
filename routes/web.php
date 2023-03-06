@@ -4,15 +4,16 @@ use App\Models\Admin\Produk;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\FrontController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\KotaController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\FrontController;
 use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\TopUpController;
 use App\Http\Controllers\Admin\AlamatController;
 use App\Http\Controllers\Admin\ProdukController;
-use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\ProvinsiController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\Admin\KeranjangController;
 use App\Http\Controllers\Admin\SubKategoriController;
 use App\Http\Controllers\Admin\RiwayatProdukController;
 use App\Http\Controllers\Admin\MetodePembayaranController;
+use App\Http\Controllers\TransaksiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +37,7 @@ use App\Http\Controllers\Admin\MetodePembayaranController;
 
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
-    Route::get('/home   ', [App\Http\Controllers\HomeController::class, 'index']);
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
     Route::resource('/dashboard',DashboardController::class);
     Route::resource('/kategori', KategoriController::class);
     Route::resource('/tag', TagController::class);
@@ -55,15 +57,18 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('/kota', KotaController::class);
     Route::resource('/kecamatan', KecamatanController::class);
     Route::get('getKota/{id}', [KotaController::class, 'getKota']);
-    Route::resource('/alamat', AlamatController::class);
     Route::get('getcity/{id}', [AlamatController::class, 'getCities']);
+    Route::resource('/transaksi', TransaksiController::class);
+    Route::get('/laporan', [ReportController::class, 'index'])->name('report.index');
+    Route::post('/laporan', [ReportController::class, 'transaksi'])->name('report.transaksi');
 });
 
 Route::get('/produk', [FrontController::class, 'produkuser']);
 Route::get('/detailproduk/{produk}', [FrontController::class, 'produkdetail']);
 Route::middleware('auth')->group (function () {
     Route::resource('/keranjang', App\Http\Controllers\KeranjangController::class);
-    Route::delete('/keranjang/{id}', [KeranjangController::class, 'destroy'])->name('keranjang.destroy');
+    // Route::get('/keranjang/{id}/keranjang', [App\Http\Controllers\KeranjangController::class, 'destroy']);
+    Route::get('keranjang/{id}/delete', [App\Http\Controllers\KeranjangController::class,'destroy']);
     Route::resource('/checkout', App\Http\Controllers\CheckoutController::class);
     Route::resource('/alamat',AlamatController::class);
     Route::get('/thanks',[App\Http\Controllers\CheckoutController::class, 'thank']);

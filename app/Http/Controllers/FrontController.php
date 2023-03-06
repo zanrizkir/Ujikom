@@ -32,24 +32,26 @@ class FrontController extends Controller
     }
     public function produkuser(Request $request)
     {
-        // $tag = $request->all();
-        
         $produk = Produk::with('image')->get();
-        $kategori = $request->all();
-        if ($kategori ) {
-            $produk = Produk::where('kategori_id', $kategori['kategori'])->get();
-        }
-        // if ($tag ) {
-        //     $produk = Produk::where('tag_id', $tag['tag'])->get();
-        // }
-        
-        // $produk = $produk->get();
-        $kategoris = Kategori::all();
-        // $tags = Tag::all();
-        // dd($tag);
-        return view('template.user.produk', compact('produk','kategoris'));
-    }
 
+        $keyword = $request->keyword;
+        if ($request->kategori) {
+            $produk = Produk::where('kategori_id', $request->kategori)->get();
+        }
+        if ($request->tags) {
+            $produk = Produk::where('tag_id', $request->tags)->get();
+        }
+        
+        if($keyword){
+            // dd($keyword);
+            // $produk = Produk::where('nama_produk', 'LIKE ' ,'%' .  $keyword . '%')->get();
+            $produk = Produk::where('name','LIKE','%'.$keyword.'%')->get();
+        }
+        // dd($keyword);
+        $kategoris = Kategori::all();
+        $tag = Tag::all();
+        return view('template.user.produk', compact('produk','kategoris','tag'));
+    }
     public function produkdetail(Produk $produk,Kategori $kategoris ,Image $images, Tag $tags )
     {
         $images = Image::where('produk_id' , $produk->id)->get();

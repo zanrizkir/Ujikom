@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-
-use Illuminate\Http\Request;
-
+use App\Models\Admin\Alamat;
 use App\Models\Admin\Produk;
-use App\Models\Admin\Keranjang;
+use Illuminate\Http\Request;
+use App\Models\Admin\Province;
 use App\Models\Admin\Transaksi;
-use App\Models\Admin\DetailTransaksi;
+use App\Models\Admin\Keranjang;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Admin\DetailTransaksi;
 use App\Models\Admin\MetodePembayaran;
 
 class CheckoutController extends Controller
@@ -31,17 +31,17 @@ class CheckoutController extends Controller
             $keranjangs = Keranjang::whereIn('id', $request->keranjang_id)->get();
             $total_harga = Keranjang::whereIn('id', $request->keranjang_id)->where('status', 'keranjang')->sum("total_harga");
         }
-        // $users = User::where('role', 'costumer')->get();
-        // $keranjangs = Keranjang::where('status', 'keranjang')->get();
-        // $metode = Payment::all();
-        $transaksis = Transaksi::with('keranjang','user')
+        $transaksis = Transaksi::with('keranjang','user','province','city','alamat')
         ->latest()
         ->get();
-        return view('template.user.checkout', compact('transaksis','total_harga','keranjangs'));
+        $users = User::where('role','costumer')->get();
+        $alamats = Alamat::with('province','city')->get();
+        $provinces  = Province::pluck('title', 'province_id');
+        return view('template.user.checkout', compact('transaksis','total_harga','keranjangs','users','provinces','alamats'));
     }
     public function create()
     {
-        // $metode = Payment::all();
+        // $payments = Payment::all();
         $users = User::all();
         $keranjangs = Keranjang::all();
         // $users = User::where('role', 'costumer')->get();
@@ -53,7 +53,7 @@ class CheckoutController extends Controller
         $validated = $request->validate([
             'user_id' => 'required',
             // 'notlp' => 'required',
-            // 'alamat' => 'required',
+            'alamat_id' => 'required',
             'keranjang_id' => 'required',
             // 'produk_id' => 'required',
             'kode_transaksi' => 'unique:transaksis',
@@ -69,44 +69,36 @@ class CheckoutController extends Controller
         } else {
             $kode = '001';
         }
-        $transaksis->kode_transaksi = 'TECH-' . $kode .date('dmy')  ;
+        $transaksis->kode_transaksi = 'ZAND-' . $kode .date('dmy')  ;
         $transaksis->user_id = $request->user_id;
-        // $transaksis->keranjang_id = $request->keranjang_id;
+        $transaksis->keranjang_id = $request->keranjang_id;
+        $transaksis->alamat_id = $request->alamat_id;
         $transaksis->tanggal_transaksi = now()->format('Y-m-d H:i:s');
-        $transaksis->status = $transaksis->status;
-        // $transaksis->jumlah = $transaksis->keranjang->jumlah;
-        // $transaksis->total_harga = $transaksis->keranjang->total_harga ;
+        // $transaksis->status = $transaksis->status;
+        $transaksis->total_harga = $transaksis->keranjang->total_harga;
 
-
-        foreach($request->keranjang_id as $keranjang){
-            $detailTransaksi = new DetailTransaksi();
-            $detailTransaksi->transaksi_id = $transaksis->id;
-            $detailTransaksi->user_id = $transaksis->user_id;
-            $detailTransaksi->keranjang_id = $keranjang;
-            $detailTransaksi->save();
-
-            $keranjangs = keranjang::where('id',$detailTransaksi->keranjang_id)->get();
-            $keranjang->status = 'checkout';
-            $keranjang->save();
-
-         $produks = Produk::where('id',$keranjang->produk_id)->first();
-         if ($produks->stok < $keranjang->jumlah) {
-            $transaksis = Transaksi::where('id', $transaksis->id)->first();
-            $transaksis->delete();
+        //  stok produk
+         $produks = Produk::findOrFail($transaksis->keranjang->produk_id);
+         if ($produks->stok < $transaksis->keranjang->jumlah) {
+             alert()->warning('Title','Lorem Lorem Lorem');
              return redirect()
-                 ->route('checkout.create')
-                 ->with('error', 'Stok Kurang');
+                 ->route('checkout.index')
+                 ->with('toast_error', 'Stok Kurang');
          } else {
-             $produks->stok -= $keranjang->jumlah;
+             $produks->stok -= $transaksis->keranjang->jumlah;
          }
          $produks->save();
-        }
-        $total_harga =  DetailTransaksi::join('keranjangs', 'detailTransaksis.keranjang_id', '=', 'keranjang_id')->
-        where('detail_transaksis.transaksi_id', $transaksis->id)->sum("keranjangs.total_harga");
-        $transaksis->save();
-         return redirect()
-            ->route('checkout.thank')
-            ->with('toast_success', 'Data has been added');
+
+         $keranjangs = keranjang::findOrFail($transaksis->keranjang_id);
+         $keranjangs->status = 'checkout';
+         $keranjangs->save();
+
+         $transaksis->save();
+         alert('Berhasil','Produk Berhasil Dipesan', 'success');
+         return redirect('/thanks');
+
+
+
 
     }
     public function show($id)
@@ -121,8 +113,8 @@ class CheckoutController extends Controller
         $users = User::all();
         $transaksis = Transaksi::findOrFail($id);
         $keranjangs = Keranjang::all();
-        $metode = MetodePembayaran::all();
-        return view('admin.transaksi.edit', compact('keranjangs', 'transaksis', 'metode', 'users'));
+        // $payments = Payment::all();
+        return view('admin.transaksi.edit', compact('keranjangs', 'transaksis', 'payments', 'users'));
     }
     public function update(Request $request, $id)
     {
@@ -131,7 +123,7 @@ class CheckoutController extends Controller
         //validasi
         $rules = [
             'keranjang_id' => 'required',
-            'metode_id' => 'required',
+            'payment_id' => 'required',
             'notlp' => 'required',
             'alamat' => 'required',
         ];
@@ -146,7 +138,7 @@ class CheckoutController extends Controller
         $transaksis->notlp = $request->notlp;
         $transaksis->alamat = $request->alamat;
         $transaksis->keranjang_id = $request->keranjang_id;
-        $transaksis->metode_id = $request->metode_id;
+        $transaksis->payment_id = $request->payment_id;
         $transaksis->tanggal_pemesanan = now()->format('D-m-y H:i:s');
         $transaksis->total_harga = $transaksis->keranjang->total_harga;
         $transaksis->save();

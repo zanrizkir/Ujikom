@@ -1,6 +1,6 @@
 <footer id="footer">
     <!-- top footer -->
-    <div class="section">
+    {{-- <div class="section">
         <!-- container -->
         <div class="container">
             <!-- row -->
@@ -62,7 +62,7 @@
             <!-- /row -->
         </div>
         <!-- /container -->
-    </div>
+    </div> --}}
     <!-- /top footer -->
 
     <!-- bottom footer -->

@@ -20,7 +20,7 @@
     <div class="cart-section mt-150 mb-150">
         <div class="container">
             <div class="row">
-                <div class="col-lg-9 col-md-12">
+                <div class="col-lg-12 col-md-12">
                     <div class="cart-table-wrap">
                         <table class="cart-table" id="keranjang" class="keranjangAll">
                             <thead class="cart-table-head">
@@ -44,19 +44,25 @@
                                             <input type="hidden" name="user_id" value="1">
                                             <input type="hidden" name="produk_id" value="{{ $keranjang->produk->id }}">
                                             <tr class="table-body-row">
-                                                <td class="product-remove"> <input id="keranjang_id" class="keranjang_id" data-harga="{{ $keranjang->total_harga }}" type="checkbox"name="keranjang_id[]" value="{{ $keranjang->id }}"></td>
-                                                <td class="product-image"><img src="{{ asset($keranjang->produk->image[0]->gambar_produk) }}" alt=""></td>
+                                                <td class="product-remove"> <input id="keranjang_id" class="keranjang_id"
+                                                        data-harga="{{ $keranjang->total_harga }}"
+                                                        type="checkbox"name="keranjang_id[]" value="{{ $keranjang->id }}">
+                                                </td>
+                                                <td class="product-image"><img
+                                                        src="{{ asset($keranjang->produk->image[0]->gambar_produk) }}"
+                                                        alt=""></td>
                                                 <td class="product-name">{{ $keranjang->produk->name }}</td>
-                                                <td class="product-price"> RP. {{ number_format($keranjang->produk->harga, 0, ',', '.') }}</td>
-                                                <td class="product-quantity"><input type="number" min="0" name="jumlah" value="{{ $keranjang->jumlah }}" onkeypress="return hanyaAngka(event)"></td>
+                                                <td class="product-price"> RP.
+                                                    {{ number_format($keranjang->produk->harga, 0, ',', '.') }}</td>
+                                                <td class="product-quantity"><input type="number" name="jumlah"
+                                                        value="{{ $keranjang->jumlah }}"
+                                                        onkeypress="return hanyaAngka(event)" min="0" required>
+                                                </td>
                                                 <td class="product-disc">{{ $keranjang->produk->diskon }}</td>
-                                                <td class="product-totalharga">RP. {{ number_format($keranjang->total_harga, 0, ',', '.') }}</td>
+                                                <td class="product-totalharga">RP.
+                                                    {{ number_format($keranjang->total_harga, 0, ',', '.') }}</td>
                                                 <td>
-                                                    <form action="{{ route('keranjang.destroy', $keranjang->id) }}" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin?')">X</button>
-                                                    </form>
+                                                    <a href="/keranjang/{{$keranjang->id}}/delete" onclick="return confirm('Apakah Anda Yakin')">X</a>
                                                 </td>
                                             </tr>
                                     @endforeach

@@ -45,12 +45,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function topup(){
-        return $this->hasMany(TopUp::class);
-    }
+    // public function topup(){
+    //     return $this->hasMany(TopUp::class);
+    // }
 
-    public function keranjang()
-    {
-        return $this->hasMany(Keranjang::class);
-    }
+    // public function keranjang()
+    // {
+    //     return $this->hasMany(Keranjang::class);
+    // }
 }

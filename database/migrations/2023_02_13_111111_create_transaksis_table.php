@@ -20,6 +20,8 @@ class CreateTransaksisTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('keranjang_id');
             $table->foreign('keranjang_id')->references('id')->on('keranjangs')->onDelete('cascade');
+            $table->unsignedBigInteger('alamat_id');
+            $table->foreign('alamat_id')->references('id')->on('alamats')->onDelete('cascade');
             $table->date('tanggal_transaksi');
             $table->integer('total_harga');
             $table->enum('status', ['proses', 'sukses', 'selesai'])->default('proses');

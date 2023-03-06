@@ -51,7 +51,7 @@
                                                     </div>
                                                 </td> --}}
                                                 <td>
-                                                    <div class="d-flex">
+                                                    <div  class="d-flex">
                                                         {{ $riwayatProduk->qty }}
                                                     </div>
                                                 </td>

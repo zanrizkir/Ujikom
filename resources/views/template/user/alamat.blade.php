@@ -75,13 +75,25 @@
                     </span>
                 @enderror
             </div>
+            <div class="mb-3">
+                <label for="label" class="form-label">Label alamat</label>
+                <select class="form-select @error('label') is-invalid @enderror" name="label"id="">
+                    <option selected disabled>--Kota--</option>
+                    <option value="rumah">Rumah</option>
+                    <option value="kantor">Kantor</option>
+                </select>
+                @error('label')
+                    <div id="label" class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
             <div class="d-flex float-end">
                 <div class="col">
                     <button type="submit" class="btn btn-primary">
                         <span class="indicator-label"> Kirim </span>
                     </button>
                 </div>
-
             </div>
         </div>
     </form>

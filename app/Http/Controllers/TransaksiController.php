@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\Admin\Alamat;
 use App\Models\Admin\Produk;
 use Illuminate\Http\Request;
+use App\Models\Admin\Province;
 use App\Models\Admin\Keranjang;
 use App\Models\Admin\Transaksi;
 use Illuminate\Support\Facades\DB;
@@ -19,13 +21,11 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        $users = User::where('role', 'costumer')->get();
-        $keranjangs = Keranjang::where('status', 'keranjang')->get();
-        $payments = MetodePembayaran::all();
-        $transaksis = Transaksi::with('keranjang','user','payment')
-        ->latest()
-        ->get();
-        return view('template.user.checkout', compact('transaksis','payments','users','keranjangs'));
+        $transaksis = Transaksi::with('keranjang','user','province','city','alamat')->latest()->get();
+        $users = User::where('role','costumer')->get();
+        $alamats = Alamat::with('province','city')->get();
+        $provinces  = Province::pluck('title', 'province_id');
+        return view('admin.transaksi.index',['active' => 'transaksis'], compact('transaksis','users','alamats','provinces'));
     }
 
     /**
@@ -68,7 +68,7 @@ class TransaksiController extends Controller
         } else {
             $kode = '001';
         }
-        $transaksis->kode_transaksi = 'ELEC-' . $kode .date('dmy')  ;
+        $transaksis->kode_transaksi = 'Zan-' .date('dmy'). $kode  ;
         $transaksis->user_id = $request->user_id;
         $transaksis->notlp = $request->notlp;
         $transaksis->alamat = $request->alamat;
@@ -82,7 +82,9 @@ class TransaksiController extends Controller
          // stok produk
          $produks = Produk::findOrFail($transaksis->keranjang->produk_id);
          if ($produks->stok < $transaksis->keranjang->jumlah) {
-             return redirect()->route('transaksi.create')->with('toast_error', 'Stok Kurang');
+             return redirect()
+                 ->route('transaksi.create')
+                 ->with('toast_error', 'Stok Kurang');
          } else {
              $produks->stok -= $transaksis->keranjang->jumlah;
          }
@@ -93,7 +95,9 @@ class TransaksiController extends Controller
          $keranjangs->save();
 
          $transaksis->save();
-         return redirect()->route('transaksi.index')->with('toast_success', 'Data has been added');
+         return redirect()
+            ->route('transaksi.index')
+            ->with('toast_success', 'Data has been added');
 
     }
 
@@ -108,7 +112,7 @@ class TransaksiController extends Controller
         $transaksis = Transaksi::findOrFail($id);
         // $users = User::all();
         // $keranjangs = Keranjang::all();
-        return view('admin.transaksi.show', compact('transaksis'));
+        return view('admin.transaksi.show',['active' => 'transaksis'], compact('transaksis'));
     }
 
     /**
@@ -123,7 +127,7 @@ class TransaksiController extends Controller
         $transaksis = Transaksi::findOrFail($id);
         $keranjangs = Keranjang::all();
         $payments = MetodePembayaran::all();
-        return view('admin.transaksi.edit', compact('keranjangs', 'transaksis', 'payments', 'users'));
+        return view('admin.transaksi.edit',['active' => 'transaksis'], compact('keranjangs', 'transaksis', 'payments', 'users'));
     }
 
     /**
@@ -159,7 +163,9 @@ class TransaksiController extends Controller
         $transaksis->tanggal_pemesanan = now()->format('D-m-y H:i:s');
         $transaksis->total_harga = $transaksis->keranjang->total_harga;
         $transaksis->save();
-        return redirect()->route('transaksi.index')->with('toast_success', 'Data has been edited');
+        return redirect()
+            ->route('transaksi.index')
+            ->with('toast_success', 'Data has been edited');
     }
 
     /**
@@ -172,6 +178,7 @@ class TransaksiController extends Controller
     {
         $transaksis = Transaksi::findOrFail($id);
         $transaksis->delete();
-        return redirect()->route('transaksi.index')->with('success', 'Data has been deleted');
+        return redirect()
+            ->route('transaksi.index')->with('success', 'Data has been deleted');
     }
 }

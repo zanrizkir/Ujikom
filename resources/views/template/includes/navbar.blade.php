@@ -24,7 +24,7 @@
                             </form>
                         </a>
                     </li>
-                    <li><a href="/profile"><i class="fa fa-user"></i> Akun Saya</a></li>
+                    {{-- <li><a href="/pesanan"><i class="fa fa-user"></i>Pesanan</a></li>  --}}
                 @endguest
             </ul>
             {{-- <ul class="header-links pull-right">
@@ -52,42 +52,64 @@
                 </div>
                 <!-- /LOGO -->
 
-                <!-- SEARCH BAR -->
-                <div class="col-md-6">
-                    <div class="header-search">
-                        <form>
-                            <select class="input-select">
-                                <option value="0">All Categories</option>
-                                <option value="1">Category 01</option>
-                                <option value="1">Category 02</option>
-                            </select>
-                            <input class="input" placeholder="Search here">
-                            <button class="search-btn">Search</button>
-                        </form>
-                    </div>
-                </div>
-                <!-- /SEARCH BAR -->
+
 
                 <!-- ACCOUNT -->
-                <div class="col-md-3 clearfix">
+                <div class="col-md-9clearfix float-end">
                     <div class="header-ctn">
                         <!-- Cart -->
                         <div class="dropdown">
                             @guest
                                 <!-- Button trigger modal -->
-                                <a href="/keranjang" aria-expanded="false" onclick="notif1()">
+                                <a href="/keranjang" aria-expanded="false" onclick="notif()">
                                     <i class="fa fa-shopping-cart"></i>
                                     <span>Keranjang</span>
-                                </a>
-                                
-                                <!-- Modal -->
-                                
-                            @else
-                            <a href="/keranjang" aria-expanded="false">
-                                <i class="fa fa-shopping-cart"></i>
-                                <span>Keranjang</span>
-                            </a>
-                            @endguest
+                                @else
+                                    <a href="/keranjang" aria-expanded="false">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        <span>Keranjang</span>
+                                        @auth
+                                            @php
+                                                $keranjang1 = App\Models\Admin\Keranjang::where('status','keranjang')->where('user_id', auth()->user()->id)->count();
+                                            @endphp
+                                            <div class="qty">{{ $keranjang1 }}</div>
+                                        @endauth
+                                    </a>
+                                @endguest
+
+                                {{-- <div class="cart-dropdown">
+                                <div class="cart-list">
+                                    <div class="product-widget">
+                                        <div class="product-img">
+                                            <img src={{ asset('components//img/product01.png') }}" alt="">
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                                            <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
+                                        </div>
+                                        <button class="delete"><i class="fa fa-close"></i></button>
+                                    </div>
+
+                                    <div class="product-widget">
+                                        <div class="product-img">
+                                            <img src={{ asset('components//img/product02.png') }}" alt="">
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                                            <h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
+                                        </div>
+                                        <button class="delete"><i class="fa fa-close"></i></button>
+                                    </div>
+                                </div>
+                                <div class="cart-summary">
+                                    <small>3 Item(s) selected</small>
+                                    <h5>SUBTOTAL: $2940.00</h5>
+                                </div>
+                                <div class="cart-btns">
+                                    <a href="#">View Cart</a>
+                                    <a href="#">Checkout <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div> --}}
                         </div>
                         <!-- /Cart -->
 
@@ -153,11 +175,11 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
-function notif1() {
-Swal.fire({
-    icon: 'error',
-    title: 'Oops...',
-    text: 'Anda Harus Login Terlebih Dahulu !',
-})
-}
+    function notif() {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Anda Harus Login Terlebih Dahulu !',
+        })
+    }
 </script>

@@ -11,6 +11,6 @@ class RiwayatProduk extends Model
     use HasFactory;
     public function produk()
     {
-        return $this->belongsTo(Produk::class);
+        return $this->belongsTo(Produk::class, 'produk_id');
     }
 }

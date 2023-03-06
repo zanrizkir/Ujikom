@@ -8,6 +8,16 @@
             <div class="row">
                 <!-- ASIDE -->
                 <div id="aside" class="col-md-3">
+                    <div class="col-md-12">
+                        <!-- SEARCH BAR -->
+                        <div class="header-search">
+                            <form action="{{ url('/produk') }}" method="GET">
+                                <input type="text" name="keyword" placeholder="Search here">
+                                <button type="submit">Search</button>
+                            </form>
+                        </div>
+                        <!-- /SEARCH BAR -->
+                    </div>
                     <!-- aside Widget -->
                     <div class="aside">
                         <h3 class="aside-title">Categories</h3>
@@ -26,18 +36,18 @@
                     </div>
                     <div class="aside">
                         <h3 class="aside-title">Tag</h3>
-                       {{-- @foreach ($tags as $tag)
+                       @foreach ($tag as $tags)
                             <div class="checkbox-filter">
                                 <div class="input-checkbox">
                                     <input type="checkbox" id="category-1">
                                     <label for="category-1">
                                         <span></span>
-                                        <a href="{{ url('produk') }}?tag={{ $tag->id }}">{{ $tag->name }}</a>
-                                         <small>({{ $tag->produk->count() }})</small> 
+                                        <a href="{{ url('produk') }}?tag={{ $tags->id }}">{{ $tags->name }}</a>
+                                         {{-- <small>({{ $tags->produk->count() }})</small>  --}}
                                     </label>
                                 </div>
                             </div>
-                        @endforeach--}}
+                        @endforeach
                     </div>
                     <!-- /aside Widget -->
                 </div>
@@ -75,19 +85,19 @@
                                             <h4 class="product-price">Rp. {{ number_format($data->harga, 0, '.', '.') }}
                                         @endif
                                         </h4>
-                                        <div class="product-rating">
+                                        {{-- <div class="product-rating">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
-                                        </div>
-                                        <div class="product-btns">
+                                        </div> --}}
+                                        {{-- <div class="product-btns">
                                             <button class="add-to-wishlist"><i class="fa fa-heart"></i><span
                                                     class="tooltipp">add to wishlist</span></button>
                                             <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick
                                                     view</span></button>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     {{-- <div class="add-to-cart">
                                         <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i><a

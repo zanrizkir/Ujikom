@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Admin\City;
 use App\Models\Admin\Citie;
 use App\Models\Admin\Province;
+use App\Models\Admin\Transaksi;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -22,5 +23,9 @@ class Alamat extends Model
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+    public function transaksi()
+    {
+        return $this->belongsTo(Transaksi::class);
     }
 }

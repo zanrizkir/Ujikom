@@ -11,12 +11,16 @@ class Keranjang extends Model
 {
     use HasFactory;
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     public function produk()
     {
         return $this->belongsTo(Produk::class);
     }
-    public function user()
+    public function transaksi()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Transaksi::class);
     }
 }

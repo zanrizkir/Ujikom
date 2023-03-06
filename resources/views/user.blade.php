@@ -112,22 +112,32 @@
                                                 <h3 class="product-name"><a
                                                         href="/detailproduk/{{ $data->slug }}">{{ $data->name }}</a>
                                                 </h3>
-                                                <h4 class="product-price">Rp.
-                                                    {{ number_format($data->harga, 0, '.', '.') }}</h4>
-                                                <div class="product-rating">
+                                                
+                                                @if ($data->diskon > 0)
+                                            <?php
+                                            $diskon = ($data->diskon / 100) * $data->harga;
+                                            $harga = $data->harga - $diskon;
+                                            ?>
+                                            <h5 class="product-price">Rp.
+                                                {{ number_format($harga, 0, '.', '.') }} <del class="product-old-price">Rp.
+                                                    {{ number_format($data->harga, 0, '.', '.') }}</del></h5>
+                                            @else
+                                                <h4 class="product-price">Rp. {{ number_format($data->harga, 0, '.', '.') }}
+                                            @endif
+                                                {{-- <div class="product-rating">
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="product-btns">
+                                                </div> --}}
+                                                {{-- <div class="product-btns">
                                                     <button class="add-to-wishlist"><i class="fa fa-heart"></i><span
                                                             class="tooltipp">add to wishlist</span></button>
                                                     <button class="quick-view"><i class="fa fa-eye"></i><span
                                                             class="tooltipp">quick
                                                             view</span></button>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                             {{-- <div class="add-to-cart">
                                                 <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i><a

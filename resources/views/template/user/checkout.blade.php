@@ -16,7 +16,7 @@
     </div>
     <div class="checkout-section mt-150 mb-150">
         <div class="container">
-
+            @include('sweetalert::alert')
             <div class="row">
                 <div class="col-lg-7">
                     <div class="checkout-accordion-wrap">
@@ -117,6 +117,21 @@
                                                                             </span>
                                                                         @enderror
                                                                     </div>
+                                                                    <div class="mb-3">
+                                                                        <label for="label" class="form-label">Label alamat</label>
+                                                                        <select class="form-control @error('label') is-invalid @enderror" name="label"id="">
+                                                                            <option selected disabled>Label alamat</option>
+                                                                            <option value="rumah">Rumah</option>
+                                                                            <option value="kantor">Kantor</option>
+                                                                        </select>
+                                                                        @error('label')
+                                                                            <div id="label" class="invalid-feedback">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    
 
                                                                 </div>
                                                         </div>
@@ -129,23 +144,23 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <form action="index.html">
-                                                <p><input type="text" name="nama_lengkap" placeholder="Nama Lengkap">
-                                                </p>
-                                                <p><input type="email" name="email" placeholder="Email"></p>
-                                                <p><input type="text" placeholder="No Telpon"></p>
-                                                <p>
-                                                    <textarea name="bill" id="bill" cols="30" rows="10" placeholder="Alamat Lengkap"></textarea>
-                                                </p>
-                                                <p><select name="alamat_id"
-                                                        class="form-control @error('alamat_id') is-invalid @enderror">
-                                                        {{-- @foreach ($kategoris as $kategori) --}}
-                                                        <option value="" hidden>Pilih Alamat</option>
-                                                        <option value="">
-                                                        </option>
-                                                        {{-- @endforeach --}}
+                                            <form action="{{ route('checkout.store') }}" method="POST">
+                                                @csrf <p><select name="alamat_id"
+                                                        class="form-control @error('alamat_id') is-invalid @enderror"
+                                                        required>
+                                                        @foreach ($alamats as $alamat)
+                                                            <option value="" hidden>Pilih alamat</option>
+                                                            <option value="{{ $alamat->id }}">
+                                                                {{ $alamat->nama_lengkap }}|
+                                                                {{ $alamat->telpon }},
+                                                                {{ $alamat->province->title }},
+                                                                {{ $alamat->city->title }},
+                                                                {{ $alamat->alamat }},
+                                                                {{ $alamat->label }},
+                                                            </option>
+                                                        @endforeach
                                                     </select></p>
-                                            </form>
+
                                         </div>
                                     </div>
                                 </div>
@@ -206,24 +221,22 @@
 
                         @if (count($keranjangs))
                             @foreach ($keranjangs as $keranjang)
-                                <form action="{{ route('checkout.store') }}" method="POST">
-                                    @csrf
-                                    <div class="order-products">
-                                        <div class="order-col">
-                                            <input type="hidden" name="user_id" value="1">
-                                            <input type="hidden" name="keranjang_id" value="{{ $keranjang->id }}">
-                                            {{-- <input type="hidden" name="kode_transaksi" value=""> --}}
-                                            <div>{{ $keranjang->produk->name }}</div>
-                                            <div> RP. {{ number_format($keranjang->produk->harga, 0, ',', '.') }}</div>
-                                            <div>{{ $keranjang->jumlah }}</div>
-                                        </div>
-                                    </div>
+                                <div class="order-products">
                                     <div class="order-col">
-                                        <div><strong>TOTAL</strong></div>
-                                        <div><strong>
-                                                RP.{{ number_format($keranjang->total_harga, 0, ',', '.') }}</strong>
-                                        </div>
+                                        <input type="hidden" name="user_id" value="1">
+                                        <input type="hidden" name="keranjang_id" value="{{ $keranjang->id }}">
+                                        {{-- <input type="hidden" name="kode_transaksi" value=""> --}}
+                                        <div>{{ $keranjang->produk->name }}</div>
+                                        <div> RP. {{ number_format($keranjang->produk->harga, 0, ',', '.') }}</div>
+                                        <div>{{ $keranjang->jumlah }}</div>
                                     </div>
+                                </div>
+                                <div class="order-col">
+                                    <div><strong>TOTAL</strong></div>
+                                    <div><strong>
+                                            RP.{{ number_format($keranjang->total_harga, 0, ',', '.') }}</strong>
+                                    </div>
+                                </div>
                             @endforeach
                         @endif
                     </div>
